@@ -18,7 +18,6 @@ info:
       * Qred's APIs are built according to industry standard practices for third-party RESTful web services
       * Strong validation, authentication & encryption
       * Entry points for requests are sent via HTTP over SSL (all information is encrypted)
-      * Requests are made using HTTP POST
 
     # How to get started
 
