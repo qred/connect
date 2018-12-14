@@ -1,0 +1,252 @@
+swagger: '2.0'
+schemes:
+  - https
+host: api.qred.com
+basePath: /loans/v1
+info:
+  description: |
+    This is the Connect to Qred API
+    # Introduction
+    The purpose of this API is to give companies and developers the ability to help their customers with loan applications.
+  version: 0.1.0
+  title: Connect to Qred
+  termsOfService: 'https://connect.qred.com/terms/'
+  contact:
+    email: contact@qred.com
+    url: 'https://connect.qred.com/contact'
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  x-logo:
+    url: 'https://qred.com/img/qred-logo-mobile-green.png'
+securityDefinitions:
+  api_key:
+    type: apiKey
+    in: header
+    name: api_key
+tags:
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /applications:
+    post:
+      tags:
+        - developers
+      summary: Add application
+      operationId: addApplication
+      description: Send a loan application to Qred
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: application
+          description: Application to add
+          schema:
+            $ref: '#/definitions/ApplicationRequest'
+      responses:
+        '201':
+          description: item created
+          schema:
+            $ref: '#/definitions/ApplicationCreateResponse'
+        '400':
+          description: 'invalid input, object invalid'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationErrorResponse'
+      security:
+        - api_key: []
+      x-code-samples:
+        - lang: 'C#'
+          source: |+
+            using Newtonsoft.Json;
+            using System.Net.Http;
+            using System.Threading.Tasks;
+            using System.Text;
+
+            namespace AwesomeBusinessApp
+            {
+              public class CreatedLoanApplication
+              {
+                public string Id { get; set; }
+                public string Url { get; set; }
+              }
+
+              public class ConnectToQred
+              {
+                HttpClient client = new HttpClient(); // note: You might not want to do this but inject client through dependency injection
+                public async Task<CreatedLoanApplication> Connect()
+                {
+                  var payload = new {
+                      Amount=5000,
+                      Organization=new {TaxID="SE2344473928"},
+                      Applicant=new{Email="joe.smith@a-company.com", Telephone="408-867-5309"}
+                  };
+                  var result = await client.PostAsync("https://api.qred.com/loans/v1/applications", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
+                  result.EnsureSuccessStatusCode();
+
+                  return JsonConvert.DeserializeObject<CreatedLoanApplication>(await result.Content.ReadAsStringAsync());
+                } 
+              }
+            }
+
+
+  '/applications/{applicationid}':
+    get:
+      summary: Get loan application
+      description: Get information about loan application from Qred
+      tags:
+        - developers
+      parameters:
+        - name: applicationid
+          in: path
+          description: The id of the application
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Found application with id
+          schema:
+            $ref: '#/definitions/Application'
+        '404':
+          description: Application not found
+      security:
+        - api_key: []
+definitions:
+  Application:
+    required:
+      - decision
+    properties:
+      decision:
+        $ref: '#/definitions/ApplicationDecision'
+  ApplicationApplicant:
+    required:
+      - email
+      - telephone
+    properties:
+      email:
+        type: string
+        format: email
+        example: joe.smith@a-company.com
+      telephone:
+        type: string
+        example: 408-867-5309
+        description: The telephone number.
+      taxID:
+        type: string
+        example: '197012012344'
+        description: 'The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain. For Denmark that would be CPR.'
+      givenName:
+        type: string
+        example: Joe
+        description: 'Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property.'
+      additionalName:
+        type: string
+        example: Daniels
+        description: 'An additional name for a Person, can be used for a middle name.'
+      familyName:
+        type: string
+        example: Smith
+        description: 'Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property.'
+  ApplicationCreateResponse:
+    properties:
+      id:
+        type: string
+        example: APP-32444
+      url:
+        type: string
+        example: 'https://api.qred.com/loans/v1/applications/APP-32444'
+  ApplicationDecision:
+    type: string
+    example: Maybe
+    enum:
+      - Accepted
+      - Denied
+      - Maybe
+  ApplicationErrorResponse:
+    properties:
+      property:
+        type: string
+        example: amount
+      description:
+        type: string
+        example: Amount is a required field
+  ApplicationOrganization:
+    required:
+      - taxID
+    properties:
+      taxID:
+        type: string
+        example: SE2344473928
+        description: Same as vatID in Sweden
+      legalName:
+        type: string
+        example: A-company
+      type:
+        $ref: '#/definitions/BusinessOrganizationType'
+      email:
+        type: string
+        format: email
+        example: contact@a-company.com
+      telephone:
+        type: string
+        example: 408-867-5309
+        description: The telephone number.
+      url:
+        type: string
+        example: 'http://www.a-company.com'
+        description: Url to the organization site.
+      lastYearsTurnover:
+        type: string
+        example: 100000
+        description: Turnover for last year in national currency
+  ApplicationRequest:
+    required:
+      - amount
+      - organization
+      - applicant
+    properties:
+      amount:
+        type: number
+        example: 15000
+      purposeOfLoan:
+        type: string
+        example: I need to increase liquidity due to upcoming costs associated with participation in branch conference
+      organization:
+        $ref: '#/definitions/ApplicationOrganization'
+      applicant:
+        $ref: '#/definitions/ApplicationApplicant'
+      files:
+        type: array
+        items:
+          $ref: '#/definitions/UploadBase64File'
+  BusinessOrganizationType:
+    type: string
+    example: LLC
+    description: 'Either use the short code or full name for the country specific ownership, liability type. For Sweden that would be something like AB, EF, HB or KB. For the US you have LLC as an organization type. For Denmark you have for instance A/S, ApS, IVS, EV or PMV.'
+  UploadBase64File:
+    required:
+      - filename
+      - base64Content
+    properties:
+      encodingFormat:
+        type: array
+        items:
+          type: string
+        example:
+          - application/xml
+          - https//api.a-company.com/transactions/v1
+        description: |-
+          Media type typically expressed using a MIME format (see [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml) site and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.).
+          Unregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. In the case of organization specific file format with a specific purpose that could be a url to schema definition. For instance, transaction data format defined by `a-company` (see the example) that may or may not be hosted at that url.
+      filename:
+        type: string
+        example: company-specific-format.xml
+      base64Content:
+        type: string
+        example: 4530987p9257493875243098572398057432095
+        description: Base64 encoded binary content.
