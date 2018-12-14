@@ -19,7 +19,7 @@ properties:
     $ref: '#/definitions/AdditionalName'
   familyName:
     $ref: '#/definitions/FamilyName'
-  dateOfBirth
+  dateOfBirth:
     $ref: '#/definitions/dateOfBirth'
-  placeOfBirth
+  placeOfBirth:
     $ref: '#/definitions/placeOfBirth'
