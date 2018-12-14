@@ -1,0 +1,12 @@
+properties:
+  type: 
+    $ref: '#/definitions/ApplicationDecisionType'
+  amount:
+    type: number
+  term:
+    type: number
+  campaign:
+    type: string
+  offerUrl:
+    type: string
+  

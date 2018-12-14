@@ -1,0 +1,6 @@
+type: string
+example: Approved
+enum:
+  - Approved
+  - Denied
+  - ManualProcess

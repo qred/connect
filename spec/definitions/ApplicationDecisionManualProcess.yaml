@@ -1,0 +1,4 @@
+properties:
+  type: 
+    $ref: '#/definitions/ApplicationDecisionType'  
+  

@@ -1,0 +1,6 @@
+properties:
+  type: 
+    $ref: '#/definitions/ApplicationDecisionType'  
+  rejectReason:
+    type: string
+  

@@ -1,6 +1,0 @@
-type: string
-example: Maybe
-enum:
-  - Accepted
-  - Denied
-  - Maybe

@@ -20,6 +20,6 @@ properties:
   familyName:
     $ref: '#/definitions/FamilyName'
   dateOfBirth:
-    $ref: '#/definitions/dateOfBirth'
+    $ref: '#/definitions/DateOfBirth'
   placeOfBirth:
-    $ref: '#/definitions/placeOfBirth'
+    $ref: '#/definitions/PlaceOfBirth'
