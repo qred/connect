@@ -6,9 +6,9 @@
   "host": "api.qred.com",
   "basePath": "/loans/v1",
   "info": {
-    "description": "This is the Connect to Qred API\n# Introduction\nThe purpose of this API is to give companies and developers the ability to help their customers with loan applications.\n",
-    "version": "0.1.0",
-    "title": "Connect to Qred",
+    "description": "Qred Connect - API Documentation\n# Introduction\nQred's Partner API \"Qred Connect\" alloows our partners to diretclty connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n# Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n  * Requests are made using HTTP POST\n\n# How to get started\nThere are two environments - Test and Production.\n\n  * Test: https://test.qred.com/api\n  * Production: https://connect.qred.com/api\n",
+    "version": "0.1.1",
+    "title": "Qred Connect",
     "termsOfService": "https://connect.qred.com/terms/",
     "contact": {
       "email": "techsupport@qred.com",
@@ -113,7 +113,19 @@
           "200": {
             "description": "Found application with id",
             "schema": {
-              "$ref": "#/definitions/Application"
+              "$ref": "#/definitions/ApplicationDecisionApproved"
+            }
+          },
+          "210": {
+            "description": "Found application with id",
+            "schema": {
+              "$ref": "#/definitions/ApplicationDecisionManualProcess"
+            }
+          },
+          "211": {
+            "description": "Found application with id",
+            "schema": {
+              "$ref": "#/definitions/ApplicationDecisionRejected"
             }
           },
           "404": {
@@ -140,14 +152,13 @@
       ],
       "properties": {
         "decision": {
-          "$ref": "#/definitions/ApplicationDecision"
+          "$ref": "#/definitions/ApplicationDecisionType"
         }
       }
     },
     "ApplicationApplicant": {
       "required": [
-        "email",
-        "mobile"
+        "email"
       ],
       "properties": {
         "email": {
@@ -174,6 +185,12 @@
         },
         "familyName": {
           "$ref": "#/definitions/FamilyName"
+        },
+        "dateOfBirth": {
+          "$ref": "#/definitions/DateOfBirth"
+        },
+        "placeOfBirth": {
+          "$ref": "#/definitions/PlaceOfBirth"
         }
       }
     },
@@ -189,13 +206,49 @@
         }
       }
     },
-    "ApplicationDecision": {
+    "ApplicationDecisionApproved": {
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ApplicationDecisionType"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "term": {
+          "type": "number"
+        },
+        "campaign": {
+          "type": "string"
+        },
+        "offerUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "ApplicationDecisionManualProcess": {
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ApplicationDecisionType"
+        }
+      }
+    },
+    "ApplicationDecisionRejected": {
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/ApplicationDecisionType"
+        },
+        "rejectReason": {
+          "type": "string"
+        }
+      }
+    },
+    "ApplicationDecisionType": {
       "type": "string",
-      "example": "Maybe",
+      "example": "Approved",
       "enum": [
-        "Accepted",
+        "Approved",
         "Denied",
-        "Maybe"
+        "ManualProcess"
       ]
     },
     "ApplicationErrorResponse": {
@@ -307,15 +360,15 @@
         "applicant"
       ],
       "properties": {
-        "currency": {
-          "type": "string",
-          "example": "SEK",
-          "description": "We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)"
-        },
         "amount": {
           "type": "number",
           "example": 15000,
           "description": "The amount in local currency that the company wants to borrow."
+        },
+        "currency": {
+          "type": "string",
+          "example": "SEK",
+          "description": "We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)"
         },
         "promoCode": {
           "type": "string",
@@ -390,9 +443,7 @@
           "$ref": "#/definitions/DateOfBirth"
         },
         "placeOfBirth": {
-          "type": "string",
-          "example": "Stockholm",
-          "description": "Place of birth."
+          "$ref": "#/definitions/PlaceOfBirth"
         }
       }
     },
