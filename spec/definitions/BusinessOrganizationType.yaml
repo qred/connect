@@ -1,3 +1,0 @@
-type: string
-example: "LLC"
-description: "Either use the short code or full name for the country specific ownership, liability type. For Sweden that would be something like AB, EF, HB or KB. For the US you have LLC as an organization type. For Denmark you have for instance A/S, ApS, IVS, EV or PMV."

@@ -1,16 +1,11 @@
 required:
-- taxID
+- organizationId
 
 properties:
-  taxID:
+  organizationId:
     type: string
     example: "SE2344473928"
-    description: "Same as vatID in Sweden" 
-  legalName:
-    type: string
-    example: "A-company"
-  type:
-    $ref: '#/definitions/BusinessOrganizationType'
+    description: "Organization identifier. In Sweden that would be organization number. In Denmark you have CVR-number. Internationally you also have duns and isicV4."
   email:
     type: string
     format: email
@@ -23,7 +18,7 @@ properties:
     type: string
     example: "http://www.a-company.com"
     description: "Url to the organization site."
-  lastYearsTurnover:
+  currentMonthlyTurnover:
     type: string
     example: 100000
-    description: "Turnover for last year in national currency"
+    description: "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."

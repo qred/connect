@@ -1,16 +1,16 @@
 required:
 - email
-- telephone
+- mobile
 properties:
   email:
     type: string
     format: email
     example: joe.smith@a-company.com
-  telephone:
+  mobile:
     type: string
     example: "408-867-5309"
-    description: "The telephone number."
-  taxID:
+    description: "The mobile phone number."
+  personalId:
     type: string
     example: "197012012344"
     description: "The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain. For Denmark that would be CPR."
