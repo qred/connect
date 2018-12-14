@@ -1,0 +1,30 @@
+
+post:
+  tags:
+  - developers
+  summary: adds an application
+  operationId: addApplication
+  description: Adds an loan application to the system
+  consumes:
+  - application/json
+  produces:
+  - application/json
+  parameters:
+  - in: body
+    name: application
+    description: Application to add
+    schema:
+      $ref: '#/definitions/ApplicationRequest'
+  responses:
+    201:
+      description: item created
+      schema:
+        $ref: '#/definitions/ApplicationCreateResponse'
+    400:
+      description: invalid input, object invalid
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/ApplicationErrorResponse'
+  security:
+    - api_key: []

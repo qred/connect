@@ -1,0 +1,29 @@
+required:
+- taxID
+
+properties:
+  taxID:
+    type: string
+    example: "SE2344473928"
+    description: "Same as vatID in Sweden" 
+  legalName:
+    type: string
+    example: "A-company"
+  type:
+    $ref: '#/definitions/BusinessOrganizationType'
+  email:
+    type: string
+    format: email
+    example: contact@a-company.com
+  telephone:
+    type: string
+    example: "408-867-5309"
+    description: "The telephone number."
+  url:
+    type: string
+    example: "http://www.a-company.com"
+    description: "Url to the organization site."
+  lastYearsTurnover:
+    type: string
+    example: 100000
+    description: "Turnover for last year in national currency"

@@ -1,0 +1,22 @@
+required:
+- filename
+- base64Content
+
+properties:
+  encodingFormat:
+    type: array
+    items:
+      type: string
+    example: ["application/xml","https//api.a-company.com/transactions/v1"]
+    description: >-
+      Media type typically expressed using a MIME format (see [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml) site and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.).
+
+      Unregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. In the case of organization specific file format with a specific purpose that could be a url to schema definition. For instance, transaction data format defined by `a-company` (see the example) that may or may not be hosted at that url.
+  filename:
+    type: string
+    example: "company-specific-format.xml"
+  base64Content:
+    type: string 
+    example: "4530987p9257493875243098572398057432095"
+    description: >-
+      Base64 encoded binary content.

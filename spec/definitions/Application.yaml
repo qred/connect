@@ -1,0 +1,5 @@
+required:
+- decision
+properties:
+  decision:
+    $ref: '#/definitions/ApplicationDecision'

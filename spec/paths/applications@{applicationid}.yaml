@@ -1,0 +1,22 @@
+#  /applications/{id}:
+ get:
+    tags:
+      - developers
+    parameters:
+    - name: applicationid
+      in: path
+      description: The id of the application
+      required: true
+      type: string
+    produces:
+    - application/json
+    responses:
+      200:
+        description: Found application with id
+        schema:
+          $ref: '#/definitions/Application'
+      404:
+        description: Application not found
+    security:
+      - api_key: []
+ 

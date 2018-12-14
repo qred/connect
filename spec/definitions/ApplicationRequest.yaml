@@ -1,0 +1,21 @@
+required:
+- amount
+- organization
+- applicant
+properties:
+  amount:
+    type: number
+    example: 15000.00
+  purposeOfLoan:
+    type: string
+    example: "I need to increase liquidity due to upcoming costs associated with participation in branch conference"
+  
+  organization:
+    $ref: '#/definitions/ApplicationOrganization'
+  applicant:
+    $ref: '#/definitions/ApplicationApplicant'
+  
+  files:
+    type: array
+    items:
+      $ref: '#/definitions/UploadBase64File'

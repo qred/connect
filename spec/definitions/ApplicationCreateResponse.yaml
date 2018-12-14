@@ -1,0 +1,7 @@
+properties:
+  id:
+    type: string
+    example: APP-32444
+  url:
+    type: string
+    example: https://api.qred.com/loans/v1/applications/APP-32444
