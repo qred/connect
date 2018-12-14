@@ -1,5 +1,7 @@
 #  /applications/{id}:
  get:
+    summary: Get loan application
+    description: Get information about loan application from Qred
     tags:
       - developers
     parameters:

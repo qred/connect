@@ -2,9 +2,9 @@
 post:
   tags:
   - developers
-  summary: adds an application
+  summary: Add application
   operationId: addApplication
-  description: Adds an loan application to the system
+  description: Send a loan application to Qred
   consumes:
   - application/json
   produces:
