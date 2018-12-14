@@ -1,6 +1,5 @@
 required:
 - email
-- mobile
 properties:
   email:
     type: string
