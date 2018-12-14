@@ -1,0 +1,3 @@
+type: string
+example: "19701201"
+description: When the person was born. Expected format is `YYYYMMDD`
