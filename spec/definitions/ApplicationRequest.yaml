@@ -3,14 +3,14 @@ required:
 - organization
 - applicant
 properties:
-  currency:
-    type: string
-    example: SEK
-    description: We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
   amount:
     type: number
     example: 15000.00
     description: "The amount in local currency that the company wants to borrow."
+  currency:
+    type: string
+    example: SEK
+    description: We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
   promoCode:
     type: string
     example: SOMECAMPAIGN123
