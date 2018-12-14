@@ -5,14 +5,20 @@ host: api.qred.com
 basePath: /loans/v1
 info:
   description: >
-    This is the Connect to Qred API
-
+    Qred Connect - API Documentation
     # Introduction
-
-    The purpose of this API is to give companies and developers the ability to help their customers with loan applications.
-
-  version: 0.1.0
-  title: Connect to Qred
+    Qred's Partner API "Qred Connect" alloows our partners to diretclty connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.
+    # Technical Specifications
+    * Qred’s APIs are built according to industry standard practices for third-party RESTful web services
+    * Strong validation, authentication & encryption
+    * Entry points for requests are sent via HTTP over SSL (all information is encrypted)
+    * Requests are made using HTTP POST
+    # How to get started
+    There are two environments - Test and Production.
+    * Test: https://test.qred.com/api
+    * Production: https://connect.qred.com/api
+  version: 0.1.1
+  title: Qred Connect
   termsOfService: 'https://connect.qred.com/terms/'
   contact:
     email: techsupport@qred.com
@@ -30,4 +36,3 @@ securityDefinitions:
 tags:
 - name: developers
   description: Operations available to regular developers
-
