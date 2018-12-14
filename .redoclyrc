@@ -1,0 +1,7 @@
+
+apiTitle: Qred Connect API
+splitSpec: true
+codeSamples: true
+swaggerUI: true
+travis: false
+oasVersion: '2.0'
