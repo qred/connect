@@ -14,7 +14,6 @@ info:
       * Qred's APIs are built according to industry standard practices for third-party RESTful web services
       * Strong validation, authentication & encryption
       * Entry points for requests are sent via HTTP over SSL (all information is encrypted)
-      * Requests are made using HTTP POST
 
     # How to get started
     There are two environments - Test and Production.
@@ -194,16 +193,27 @@ definitions:
         type: string
       offerUrl:
         type: string
+    example:
+      type: Approved
+      amount: 5000
+      term: 12
+      campaign: Spring Campaign
+      offerUrl: 'https://qred.com/link-to-offer?id=offer-id'
   ApplicationDecisionManualProcess:
     properties:
       type:
         $ref: '#/definitions/ApplicationDecisionType'
+    example:
+      type: ManualProcess
   ApplicationDecisionRejected:
     properties:
       type:
         $ref: '#/definitions/ApplicationDecisionType'
       rejectReason:
         type: string
+    example:
+      type: Denied
+      rejectReason: Due to previous problems with payments we regret that we have to reject the application.
   ApplicationDecisionType:
     type: string
     example: Approved

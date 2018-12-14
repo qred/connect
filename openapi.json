@@ -6,7 +6,7 @@
   "host": "api.qred.com",
   "basePath": "/loans/v1",
   "info": {
-    "description": "Qred Connect - API Documentation\n# Introduction\nQred's Partner API \"Qred Connect\" alloows our partners to diretclty connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n# Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n  * Requests are made using HTTP POST\n\n# How to get started\nThere are two environments - Test and Production.\n\n  * Test: https://test.qred.com/api\n  * Production: https://connect.qred.com/api\n",
+    "description": "Qred Connect - API Documentation\n# Introduction\nQred's Partner API \"Qred Connect\" alloows our partners to diretclty connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n# Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n\n# How to get started\nThere are two environments - Test and Production.\n\n  * Test: https://test.qred.com/api\n  * Production: https://connect.qred.com/api\n",
     "version": "0.1.1",
     "title": "Qred Connect",
     "termsOfService": "https://connect.qred.com/terms/",
@@ -223,6 +223,13 @@
         "offerUrl": {
           "type": "string"
         }
+      },
+      "example": {
+        "type": "Approved",
+        "amount": 5000,
+        "term": 12,
+        "campaign": "Spring Campaign",
+        "offerUrl": "https://qred.com/link-to-offer?id=offer-id"
       }
     },
     "ApplicationDecisionManualProcess": {
@@ -230,6 +237,9 @@
         "type": {
           "$ref": "#/definitions/ApplicationDecisionType"
         }
+      },
+      "example": {
+        "type": "ManualProcess"
       }
     },
     "ApplicationDecisionRejected": {
@@ -240,6 +250,10 @@
         "rejectReason": {
           "type": "string"
         }
+      },
+      "example": {
+        "type": "Denied",
+        "rejectReason": "Due to previous problems with payments we regret that we have to reject the application."
       }
     },
     "ApplicationDecisionType": {
