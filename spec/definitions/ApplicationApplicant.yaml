@@ -1,28 +1,22 @@
 required:
 - email
-- telephone
+- mobile
 properties:
   email:
     type: string
     format: email
     example: joe.smith@a-company.com
-  telephone:
+  mobile:
     type: string
     example: "408-867-5309"
-    description: "The telephone number."
-  taxID:
-    type: string
-    example: "197012012344"
-    description: "The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain. For Denmark that would be CPR."
+    description: "The mobile phone number."
+  politicallyExposedPerson:
+    $ref: '#/definitions/PoliticallyExposedPerson'
+  personalId:
+    $ref: '#/definitions/PersonalId'
   givenName:
-    type: string
-    example: "Joe"
-    description: "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property."
+    $ref: '#/definitions/GivenName'
   additionalName:
-    type: string
-    example: "Daniels"
-    description: "An additional name for a Person, can be used for a middle name."
+    $ref: '#/definitions/AdditionalName'
   familyName:
-    type: string
-    example: "Smith"
-    description: "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property."
+    $ref: '#/definitions/FamilyName'

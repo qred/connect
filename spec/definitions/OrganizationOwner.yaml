@@ -1,0 +1,19 @@
+properties:
+  personalId:
+    $ref: '#/definitions/PersonalId'
+  givenName:
+    $ref: '#/definitions/GivenName'
+  additionalName:
+    $ref: '#/definitions/AdditionalName'
+  familyName:
+    $ref: '#/definitions/FamilyName'
+  ownerShipPercent:
+    type: number
+    example: 75
+    description: Ownership in percent.
+  dateOfBirth:
+    $ref: '#/definitions/DateOfBirth'
+  placeOfBirth:
+    type: string
+    example: Stockholm
+    description: Place of birth.

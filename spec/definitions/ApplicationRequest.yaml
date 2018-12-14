@@ -3,18 +3,34 @@ required:
 - organization
 - applicant
 properties:
+  currency:
+    type: string
+    example: SEK
+    description: We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
   amount:
     type: number
     example: 15000.00
+    description: "The amount in local currency that the company wants to borrow."
+  promoCode:
+    type: string
+    example: SOMECAMPAIGN123
+    description: Promo code used to give the customer a discount or extra benefits.
+  loanTerm:
+    type: number
+    example: 12
+    description: Loan term number of months
   purposeOfLoan:
     type: string
     example: "I need to increase liquidity due to upcoming costs associated with participation in branch conference"
-  
+    description: Company explains why they need the business loan
   organization:
     $ref: '#/definitions/ApplicationOrganization'
   applicant:
     $ref: '#/definitions/ApplicationApplicant'
-  
+  politicallyExposedPersons:
+    type: array
+    items:
+      $ref: '#/definitions/ApplicationPoliticallyExposedPerson'
   files:
     type: array
     items:

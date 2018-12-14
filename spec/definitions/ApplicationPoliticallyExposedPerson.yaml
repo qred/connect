@@ -1,0 +1,17 @@
+properties:
+  personalId:
+    $ref: '#/definitions/PersonalId'
+  givenName:
+    $ref: '#/definitions/GivenName'
+  additionalName:
+    $ref: '#/definitions/AdditionalName'
+  familyName:
+    $ref: '#/definitions/FamilyName'
+  dateOfBirth:
+    $ref: '#/definitions/DateOfBirth'
+  placeOfBirth:
+    $ref: '#/definitions/PlaceOfBirth'
+  description:
+    type: string
+    example: Member of the parliament
+    description: How is the person politically exposed.
