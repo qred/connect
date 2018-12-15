@@ -7,7 +7,7 @@ info:
   description: |
     Qred Connect - API Documentation
     # Introduction
-    Qred's Partner API "Qred Connect" alloows our partners to diretclty connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.
+    Qred's Partner API "Qred Connect" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.
     # Technical Specifications
     Notice that for Qred Connect:
 
