@@ -2,4 +2,4 @@ required:
 - decision
 properties:
   decision:
-    $ref: '#/definitions/ApplicationDecision'
+    $ref: '#/definitions/ApplicationDecisionType'

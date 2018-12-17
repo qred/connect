@@ -16,7 +16,15 @@
       200:
         description: Found application with id
         schema:
-          $ref: '#/definitions/Application'
+          $ref: '#/definitions/ApplicationDecisionApproved'
+      210:
+        description: Found application with id
+        schema:
+          $ref: '#/definitions/ApplicationDecisionManualProcess'
+      211:
+        description: Found application with id
+        schema:
+          $ref: '#/definitions/ApplicationDecisionRejected'
       404:
         description: Application not found
     security:

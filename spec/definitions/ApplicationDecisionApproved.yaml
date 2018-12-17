@@ -1,0 +1,17 @@
+properties:
+  type: 
+    $ref: '#/definitions/ApplicationDecisionType'
+  amount:
+    type: number
+  term:
+    type: number
+  campaign:
+    type: string
+  offerUrl:
+    type: string
+example:
+  type: Approved
+  amount: 5000
+  term: 12
+  campaign: Spring Campaign
+  offerUrl: https://qred.com/link-to-offer?id=offer-id

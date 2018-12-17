@@ -1,6 +1,5 @@
 required:
 - email
-- mobile
 properties:
   email:
     type: string
@@ -20,3 +19,7 @@ properties:
     $ref: '#/definitions/AdditionalName'
   familyName:
     $ref: '#/definitions/FamilyName'
+  dateOfBirth:
+    $ref: '#/definitions/DateOfBirth'
+  placeOfBirth:
+    $ref: '#/definitions/PlaceOfBirth'
