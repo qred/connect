@@ -10,6 +10,7 @@ allOf:
         type: string
       offerUrl:
         type: string
+        description: Url for the user to see and accept the offer given by Qred
 example:
   type: Approved
   amount: 5000

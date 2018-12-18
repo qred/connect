@@ -16,7 +16,7 @@ properties:
     type: string
     example: SOMECAMPAIGN123
     description: Promo code used to give the customer a discount or extra benefits.
-  loanTerm:
+  term:
     type: number
     example: 12
     description: Loan term number of months
