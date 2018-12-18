@@ -45,3 +45,5 @@ securityDefinitions:
 tags:
 - name: applications
   description: Create loan applications on behalf of your customers
+- name: full applications
+  description: Create loan applications with a full set of fields available for advanced users of the Qred API

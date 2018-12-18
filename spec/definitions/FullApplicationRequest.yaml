@@ -1,0 +1,12 @@
+allOf:
+  - $ref: '#/definitions/ApplicationRequest'
+  - type: object
+    properties:
+      politicallyExposedPersons:
+        type: array
+        items:
+          $ref: '#/definitions/ApplicationPoliticallyExposedPerson'
+      organization:
+        $ref: '#/definitions/FullApplicationOrganization'
+      applicant:
+        $ref: '#/definitions/FullApplicationApplicant'

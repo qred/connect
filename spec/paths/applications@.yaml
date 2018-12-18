@@ -1,0 +1,30 @@
+
+post:
+  tags:
+  - full applications
+  summary: Add a full loan application with advanced fields
+  operationId: addApplication
+  description: Send a loan application to Qred. This part of the API gives you the ability to send in further fields to simplify the qualification of the of the customer application. 
+  consumes:
+  - application/json
+  produces:
+  - application/json
+  parameters:
+  - in: body
+    name: application
+    description: Application to add
+    schema:
+      $ref: '#/definitions/FullApplicationRequest'
+  responses:
+    201:
+      description: item created
+      schema:
+        $ref: '#/definitions/ApplicationCreateResponse'
+    400:
+      description: invalid input, object invalid
+      schema:
+        type: array
+        items:
+          $ref: '#/definitions/ApplicationErrorResponse'
+  security:
+    - api_key: []

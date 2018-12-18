@@ -9,8 +9,6 @@ properties:
     type: string
     example: "408-867-5309"
     description: "The mobile phone number."
-  #politicallyExposedPerson:
-  #  $ref: '#/definitions/PoliticallyExposedPerson'
   personalId:
     $ref: '#/definitions/PersonalId'
   givenName:
@@ -19,7 +17,3 @@ properties:
     $ref: '#/definitions/AdditionalName'
   familyName:
     $ref: '#/definitions/FamilyName'
-  #dateOfBirth:
-  #  $ref: '#/definitions/DateOfBirth'
-  #placeOfBirth:
-  #  $ref: '#/definitions/PlaceOfBirth'

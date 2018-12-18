@@ -27,10 +27,6 @@ properties:
     $ref: '#/definitions/ApplicationOrganization'
   applicant:
     $ref: '#/definitions/ApplicationApplicant'
-  #politicallyExposedPersons:
-  #  type: array
-  #  items:
-  #    $ref: '#/definitions/ApplicationPoliticallyExposedPerson'
   files:
     type: array
     items:
