@@ -1,3 +1,0 @@
-type: string
-example: "197012012344"
-description: "The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain. For Denmark that would be CPR."

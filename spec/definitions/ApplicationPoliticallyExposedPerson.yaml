@@ -1,6 +1,6 @@
 properties:
-  personalId:
-    $ref: '#/definitions/PersonalId'
+  nationalIdentificationNumber:
+    $ref: '#/definitions/NationalIdentificationNumber'
   givenName:
     $ref: '#/definitions/GivenName'
   additionalName:

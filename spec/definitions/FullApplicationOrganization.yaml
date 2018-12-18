@@ -21,6 +21,7 @@ allOf:
           - ApplicantOwnMoreThan75Percent
           - MultipleOwnersWithMoreThan25Percent
           - NoOwnerWithMoreThan25Percent
+        #description:
       owners:
         type: array
         items:

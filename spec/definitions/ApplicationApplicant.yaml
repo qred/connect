@@ -9,8 +9,8 @@ properties:
     type: string
     example: "408-867-5309"
     description: "The mobile phone number."
-  personalId:
-    $ref: '#/definitions/PersonalId'
+  nationalPersonalNumber:
+    $ref: '#/definitions/NationalPersonalNumber'
   givenName:
     $ref: '#/definitions/GivenName'
   additionalName:

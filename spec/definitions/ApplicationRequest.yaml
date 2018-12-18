@@ -1,5 +1,6 @@
 required:
 - amount
+- currency
 - organization
 - applicant
 properties:
@@ -31,3 +32,4 @@ properties:
     type: array
     items:
       $ref: '#/definitions/UploadBase64File'
+  description: Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer.
