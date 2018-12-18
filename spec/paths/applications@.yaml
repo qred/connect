@@ -15,6 +15,14 @@ post:
     description: Application to add
     schema:
       $ref: '#/definitions/FullApplicationRequest'
+  - in: header
+    name: Prefer
+    schema:
+      type: string
+      enum:
+        - FullApplication
+        - CompleteApplication
+    required: true
   responses:
     201:
       description: item created
