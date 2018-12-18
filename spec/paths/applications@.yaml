@@ -23,8 +23,6 @@ post:
     400:
       description: invalid input, object invalid
       schema:
-        type: array
-        items:
-          $ref: '#/definitions/ApplicationErrorResponse'
+        $ref: '#/definitions/ApplicationErrorResponse'
   security:
     - api_key: []
