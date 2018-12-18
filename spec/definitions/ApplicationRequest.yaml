@@ -11,11 +11,13 @@ properties:
   currency:
     type: string
     example: SEK
-    description: We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
+    description: >-
+      We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
   promoCode:
     type: string
     example: SOMECAMPAIGN123
-    description: Promo code used to give the customer a discount or extra benefits.
+    description: >-
+      Promo code used to give the customer a discount or extra benefits.
   term:
     type: number
     example: 12
@@ -23,7 +25,8 @@ properties:
   purposeOfLoan:
     type: string
     example: "I need to increase liquidity due to upcoming costs associated with participation in branch conference"
-    description: Company explains why they need the business loan
+    description: >-
+      Company explains why they need the business loan
   organization:
     $ref: '#/definitions/ApplicationOrganization'
   applicant:
@@ -32,4 +35,4 @@ properties:
     type: array
     items:
       $ref: '#/definitions/UploadBase64File'
-  description: Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer.
+    description: Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer.

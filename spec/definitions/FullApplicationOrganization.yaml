@@ -16,7 +16,6 @@ allOf:
           - OnePersonOwnMoreThan75Percent
           - MultipleOwnersWithMoreThan25Percent
           - NoOwnerWithMoreThan25Percent
-        #description:
       owners:
         type: array
         items:
@@ -24,5 +23,6 @@ allOf:
       iban:
         type: string
         example: DE89 3704 0044 0532 0130 00
-        description: International Bank Account Number. The company bank account for receiving out payment. 
+        description: >
+          International Bank Account Number. The company bank account for receiving out payment. 
         

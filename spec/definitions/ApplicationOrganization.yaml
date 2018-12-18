@@ -1,5 +1,5 @@
 required:
-- organizationId
+- vatIdentificationNumber
 
 properties:
   vatIdentificationNumber:
@@ -15,12 +15,7 @@ properties:
     example: invoice@a-company.com
     description: Company email 
   phone:
-    type: string
-    example: "+4688675309"
-    description: >
-      The phone number. Note that the phone number might not be sent as a number,
-      see [E.161](https://en.wikipedia.org/wiki/E.161). 
-      We prefer [E.164](https://en.wikipedia.org/wiki/E.164).
+    $ref: '#/definitions/PhoneNumber'
   url:
     type: string
     example: "http://www.a-company.com"
