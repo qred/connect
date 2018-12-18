@@ -31,17 +31,21 @@
   },
   "tags": [
     {
-      "name": "developers",
-      "description": "Operations available to regular developers"
+      "name": "applications",
+      "description": "Create loan applications on behalf of your customers"
+    },
+    {
+      "name": "full applications",
+      "description": "Create loan applications with a full set of fields available for advanced users of the Qred API"
     }
   ],
   "paths": {
     "/applications": {
       "post": {
         "tags": [
-          "developers"
+          "applications"
         ],
-        "summary": "Add application",
+        "summary": "Add loan application",
         "operationId": "addApplication",
         "description": "Send a loan application to Qred",
         "consumes": [
@@ -70,10 +74,7 @@
           "400": {
             "description": "invalid input, object invalid",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ApplicationErrorResponse"
-              }
+              "$ref": "#/definitions/ApplicationErrorResponse"
             }
           }
         },
@@ -85,17 +86,62 @@
         "x-code-samples": [
           {
             "lang": "C#",
-            "source": "using Newtonsoft.Json;\nusing System.Net.Http;\nusing System.Threading.Tasks;\nusing System.Text;\n\nnamespace AwesomeBusinessApp\n{\n  public class CreatedLoanApplication\n  {\n    public string Id { get; set; }\n    public string Url { get; set; }\n  }\n\n  public class ConnectToQred\n  {\n    HttpClient client = new HttpClient(); // note: You might not want to do this but inject client through dependency injection\n    public async Task<CreatedLoanApplication> Connect()\n    {\n      var payload = new {\n          Amount=5000,\n          Organization=new {TaxID=\"SE2344473928\"},\n          Applicant=new{Email=\"joe.smith@a-company.com\", Telephone=\"408-867-5309\"}\n      };\n      var result = await client.PostAsync(\"https://api.qred.com/loans/v1/applications\", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, \"application/json\"));\n      result.EnsureSuccessStatusCode();\n\n      return JsonConvert.DeserializeObject<CreatedLoanApplication>(await result.Content.ReadAsStringAsync());\n    } \n  }\n}\n\n\n"
+            "source": "using Newtonsoft.Json;\nusing System.Net.Http;\nusing System.Threading.Tasks;\nusing System.Text;\nusing System;\n\nnamespace AwesomeBusinessApp\n{\n  public class CreatedLoanApplication\n  {\n    public string Id { get; set; }\n    public Uri Url { get; set; }\n  }\n\n  public class ConnectToQred\n  {\n    HttpClient client = new HttpClient(); // note: You might not want to do this but inject client through dependency injection\n    public async Task<CreatedLoanApplication> Connect()\n    {\n      var payload = new {\n          Amount=5000,\n          Currency=\"SEK\",\n          Organization=new {VatIdentificationNumber=\"SE2344473928\"},\n          Applicant=new{Email=\"joe.smith@a-company.com\", Phone=\"408-867-5309\"}\n      };\n      var result = await client.PostAsync(\"https://api.qred.com/loans/v1/applications\", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, \"application/json\"));\n      result.EnsureSuccessStatusCode();\n\n      return JsonConvert.DeserializeObject<CreatedLoanApplication>(await result.Content.ReadAsStringAsync());\n    } \n  }\n}\n\n\n"
+          }
+        ]
+      }
+    },
+    "/applications/": {
+      "post": {
+        "tags": [
+          "full applications"
+        ],
+        "summary": "Add a full loan application with advanced fields",
+        "operationId": "addFullApplication",
+        "description": "Send a loan application to Qred. This part of the API gives you the ability to send in further fields to simplify the qualification of the of the customer application.\n### Restricted usage\nNote however that this API will not be available for all users of the Qred Connect API. You can sign up for it by contacting Qred.",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "application",
+            "description": "Application to add",
+            "schema": {
+              "$ref": "#/definitions/FullApplicationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "item created",
+            "schema": {
+              "$ref": "#/definitions/ApplicationCreateResponse"
+            }
+          },
+          "400": {
+            "description": "invalid input, object invalid",
+            "schema": {
+              "$ref": "#/definitions/ApplicationErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
           }
         ]
       }
     },
     "/applications/{applicationid}": {
       "get": {
-        "summary": "Get loan application",
-        "description": "Get information about loan application from Qred",
+        "summary": "Status of loan application",
+        "description": "Get summary information about loan application from Qred",
         "tags": [
-          "developers"
+          "applications"
         ],
         "parameters": [
           {
@@ -146,16 +192,6 @@
       "example": "Daniels",
       "description": "An additional name for a Person, can be used for a middle name."
     },
-    "Application": {
-      "required": [
-        "decision"
-      ],
-      "properties": {
-        "decision": {
-          "$ref": "#/definitions/ApplicationDecisionType"
-        }
-      }
-    },
     "ApplicationApplicant": {
       "required": [
         "email"
@@ -166,16 +202,11 @@
           "format": "email",
           "example": "joe.smith@a-company.com"
         },
-        "mobile": {
-          "type": "string",
-          "example": "408-867-5309",
-          "description": "The mobile phone number."
+        "phone": {
+          "$ref": "#/definitions/PhoneNumber"
         },
-        "politicallyExposedPerson": {
-          "$ref": "#/definitions/PoliticallyExposedPerson"
-        },
-        "personalId": {
-          "$ref": "#/definitions/PersonalId"
+        "nationalIdentificationNumber": {
+          "$ref": "#/definitions/NationalIdentificationNumber"
         },
         "givenName": {
           "$ref": "#/definitions/GivenName"
@@ -185,12 +216,6 @@
         },
         "familyName": {
           "$ref": "#/definitions/FamilyName"
-        },
-        "dateOfBirth": {
-          "$ref": "#/definitions/DateOfBirth"
-        },
-        "placeOfBirth": {
-          "$ref": "#/definitions/PlaceOfBirth"
         }
       }
     },
@@ -202,28 +227,46 @@
         },
         "url": {
           "type": "string",
+          "format": "uri",
           "example": "https://api.qred.com/loans/v1/applications/APP-32444"
         }
       }
     },
-    "ApplicationDecisionApproved": {
+    "ApplicationDecision": {
+      "required": [
+        "decision"
+      ],
       "properties": {
-        "type": {
+        "decision": {
           "$ref": "#/definitions/ApplicationDecisionType"
-        },
-        "amount": {
-          "type": "number"
-        },
-        "term": {
-          "type": "number"
-        },
-        "campaign": {
-          "type": "string"
-        },
-        "offerUrl": {
-          "type": "string"
         }
-      },
+      }
+    },
+    "ApplicationDecisionApproved": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApplicationDecision"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "amount": {
+              "type": "number"
+            },
+            "term": {
+              "type": "number"
+            },
+            "campaign": {
+              "type": "string"
+            },
+            "offerUrl": {
+              "type": "string",
+              "format": "uri",
+              "description": "Url for the user to see and accept the offer given by Qred"
+            }
+          }
+        }
+      ],
       "example": {
         "type": "Approved",
         "amount": 5000,
@@ -233,24 +276,29 @@
       }
     },
     "ApplicationDecisionManualProcess": {
-      "properties": {
-        "type": {
-          "$ref": "#/definitions/ApplicationDecisionType"
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApplicationDecision"
         }
-      },
+      ],
       "example": {
         "type": "ManualProcess"
       }
     },
     "ApplicationDecisionRejected": {
-      "properties": {
-        "type": {
-          "$ref": "#/definitions/ApplicationDecisionType"
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApplicationDecision"
         },
-        "rejectReason": {
-          "type": "string"
+        {
+          "type": "object",
+          "properties": {
+            "rejectReason": {
+              "type": "string"
+            }
+          }
         }
-      },
+      ],
       "example": {
         "type": "Denied",
         "rejectReason": "Due to previous problems with payments we regret that we have to reject the application."
@@ -266,6 +314,33 @@
       ]
     },
     "ApplicationErrorResponse": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ApplicationErrorResponseItem"
+          }
+        }
+      },
+      "example": {
+        "errors": [
+          {
+            "property": "amount",
+            "description": "Amount is a required field"
+          },
+          {
+            "property": "organization.organizationId",
+            "description": "organizationId is a required field"
+          },
+          {
+            "property": "applicant.email",
+            "description": "email is a required field"
+          }
+        ]
+      }
+    },
+    "ApplicationErrorResponseItem": {
       "properties": {
         "property": {
           "type": "string",
@@ -279,71 +354,35 @@
     },
     "ApplicationOrganization": {
       "required": [
-        "organizationId"
+        "vatIdentificationNumber"
       ],
       "properties": {
-        "organizationId": {
+        "vatIdentificationNumber": {
           "type": "string",
           "example": "SE2344473928",
-          "description": "Organization identifier. In Sweden that would be organization number. In Denmark you have CVR-number. Internationally you also have duns and isicV4."
+          "description": "The VAT identifier is used to identify organizations in various countries. In Sweden that would be a prefixed organization number. In Denmark you have prefixed CVR-number.  See [VAT identification number](https://en.wikipedia.org/wiki/VAT_identification_number) for more information.\n"
         },
-        "companyEmail": {
-          "type": "string",
-          "format": "email",
-          "example": "contact@a-company.com",
-          "description": "Company email"
-        },
-        "invoiceEmail": {
+        "email": {
           "type": "string",
           "format": "email",
           "example": "invoice@a-company.com",
-          "description": "The company invoice email"
+          "description": "Company email"
         },
-        "telephone": {
-          "type": "string",
-          "example": "408-867-5309",
-          "description": "The telephone number."
+        "phone": {
+          "$ref": "#/definitions/PhoneNumber"
         },
         "url": {
           "type": "string",
+          "format": "uri",
           "example": "http://www.a-company.com",
           "description": "Url to the organization site."
-        },
-        "numberOfEmployees": {
-          "type": "number",
-          "example": 5,
-          "description": "Number of full time employees."
-        },
-        "currentMonthlyTurnover": {
-          "type": "string",
-          "example": 100000,
-          "description": "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
-        },
-        "ownerType": {
-          "type": "string",
-          "enum": [
-            "ApplicantOwnMoreThan75Percent",
-            "MultipleOwnersWithMoreThan25Percent",
-            "NoOwnerWithMoreThan25Percent"
-          ]
-        },
-        "owners": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/OrganizationOwner"
-          }
-        },
-        "iban": {
-          "type": "string",
-          "example": "DE89 3704 0044 0532 0130 00",
-          "description": "International Bank Account Number. The company bank account for receiving out payment."
         }
       }
     },
     "ApplicationPoliticallyExposedPerson": {
       "properties": {
-        "personalId": {
-          "$ref": "#/definitions/PersonalId"
+        "nationalIdentificationNumber": {
+          "$ref": "#/definitions/NationalIdentificationNumber"
         },
         "givenName": {
           "$ref": "#/definitions/GivenName"
@@ -370,6 +409,7 @@
     "ApplicationRequest": {
       "required": [
         "amount",
+        "currency",
         "organization",
         "applicant"
       ],
@@ -389,7 +429,7 @@
           "example": "SOMECAMPAIGN123",
           "description": "Promo code used to give the customer a discount or extra benefits."
         },
-        "loanTerm": {
+        "term": {
           "type": "number",
           "example": 12,
           "description": "Loan term number of months"
@@ -405,17 +445,12 @@
         "applicant": {
           "$ref": "#/definitions/ApplicationApplicant"
         },
-        "politicallyExposedPersons": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ApplicationPoliticallyExposedPerson"
-          }
-        },
         "files": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/UploadBase64File"
-          }
+          },
+          "description": "Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer."
         }
       }
     },
@@ -429,15 +464,98 @@
       "example": "Smith",
       "description": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property."
     },
+    "FullApplicationApplicant": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApplicationApplicant"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "politicallyExposedPerson": {
+              "$ref": "#/definitions/PoliticallyExposedPerson"
+            },
+            "dateOfBirth": {
+              "$ref": "#/definitions/DateOfBirth"
+            },
+            "placeOfBirth": {
+              "$ref": "#/definitions/PlaceOfBirth"
+            }
+          }
+        }
+      ]
+    },
+    "FullApplicationOrganization": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApplicationOrganization"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "numberOfEmployees": {
+              "type": "number",
+              "example": 5,
+              "description": "Number of full time employees."
+            },
+            "currentMonthlyTurnover": {
+              "type": "string",
+              "example": 100000,
+              "description": "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
+            },
+            "owners": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/OrganizationOwner"
+              }
+            },
+            "iban": {
+              "type": "string",
+              "example": "DE89 3704 0044 0532 0130 00",
+              "description": "International Bank Account Number. The company bank account for receiving out payment. \n"
+            }
+          }
+        }
+      ]
+    },
+    "FullApplicationRequest": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/ApplicationRequest"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "politicallyExposedPersons": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ApplicationPoliticallyExposedPerson"
+              }
+            },
+            "organization": {
+              "$ref": "#/definitions/FullApplicationOrganization"
+            },
+            "applicant": {
+              "$ref": "#/definitions/FullApplicationApplicant"
+            }
+          }
+        }
+      ]
+    },
     "GivenName": {
       "type": "string",
       "example": "Joe",
       "description": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property."
     },
+    "NationalIdentificationNumber": {
+      "type": "string",
+      "example": "197012012344",
+      "description": "### Short explanation\nThe Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain.  For Denmark that would be CPR. For Sweden it would be personal number.\n### Longer explanation\nThe value does not need to be a number. For some countries it's a string. However, since the accepted name on wikipedia is national identification number, we accept the inconsistancy. For further information see [wikipedia](https://en.wikipedia.org/wiki/National_identification_number).\n"
+    },
     "OrganizationOwner": {
       "properties": {
-        "personalId": {
-          "$ref": "#/definitions/PersonalId"
+        "nationalIdentificationNumber": {
+          "$ref": "#/definitions/NationalIdentificationNumber"
         },
         "givenName": {
           "$ref": "#/definitions/GivenName"
@@ -461,10 +579,10 @@
         }
       }
     },
-    "PersonalId": {
+    "PhoneNumber": {
       "type": "string",
-      "example": "197012012344",
-      "description": "The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain. For Denmark that would be CPR."
+      "example": "+4688675309",
+      "description": "The phone number. Note that the phone number might not be sent as a number, see [E.161](https://en.wikipedia.org/wiki/E.161).  We prefer [E.164](https://en.wikipedia.org/wiki/E.164).\n"
     },
     "PlaceOfBirth": {
       "type": "string",
@@ -499,7 +617,8 @@
         },
         "base64Content": {
           "type": "string",
-          "example": "4530987p9257493875243098572398057432095",
+          "format": "byte",
+          "example": "U3dhZ2dlciByb2Nrcw==",
           "description": "Base64 encoded binary content."
         }
       }
