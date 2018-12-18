@@ -3,7 +3,7 @@ post:
   tags:
   - full applications
   summary: Add a full loan application with advanced fields
-  operationId: addApplication
+  operationId: addFullApplication
   description: Send a loan application to Qred. This part of the API gives you the ability to send in further fields to simplify the qualification of the of the customer application. 
   consumes:
   - application/json

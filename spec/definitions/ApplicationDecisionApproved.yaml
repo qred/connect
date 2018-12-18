@@ -1,14 +1,15 @@
-properties:
-  type: 
-    $ref: '#/definitions/ApplicationDecisionType'
-  amount:
-    type: number
-  term:
-    type: number
-  campaign:
-    type: string
-  offerUrl:
-    type: string
+allOf:
+  - $ref: '#/definitions/ApplicationDecision'
+  - type: object
+    properties:
+      amount:
+        type: number
+      term:
+        type: number
+      campaign:
+        type: string
+      offerUrl:
+        type: string
 example:
   type: Approved
   amount: 5000
