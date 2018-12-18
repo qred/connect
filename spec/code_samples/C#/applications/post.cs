@@ -18,8 +18,9 @@ namespace AwesomeBusinessApp
     {
       var payload = new {
           Amount=5000,
-          Organization=new {TaxID="SE2344473928"},
-          Applicant=new{Email="joe.smith@a-company.com", Telephone="408-867-5309"}
+          Currency="SEK",
+          Organization=new {VatIdentificationNumber="SE2344473928"},
+          Applicant=new{Email="joe.smith@a-company.com", Phone="408-867-5309"}
       };
       var result = await client.PostAsync("https://api.qred.com/loans/v1/applications", new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
       result.EnsureSuccessStatusCode();
