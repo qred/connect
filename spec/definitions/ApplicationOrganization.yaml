@@ -18,5 +18,6 @@ properties:
     $ref: '#/definitions/PhoneNumber'
   url:
     type: string
+    format: uri
     example: "http://www.a-company.com"
     description: "Url to the organization site."

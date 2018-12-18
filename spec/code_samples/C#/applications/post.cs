@@ -2,13 +2,14 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Text;
+using System;
 
 namespace AwesomeBusinessApp
 {
   public class CreatedLoanApplication
   {
     public string Id { get; set; }
-    public string Url { get; set; }
+    public Uri Url { get; set; }
   }
 
   public class ConnectToQred
