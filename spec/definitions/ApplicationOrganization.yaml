@@ -6,16 +6,16 @@ properties:
     type: string
     example: "SE2344473928"
     description: "Organization identifier. In Sweden that would be organization number. In Denmark you have CVR-number. Internationally you also have duns and isicV4."
-  companyEmail:
-    type: string
-    format: email
-    example: contact@a-company.com
-    description: Company email
-  invoiceEmail:
+  email:
     type: string
     format: email
     example: invoice@a-company.com
-    description: The company invoice email
+    description: Company email or invoice email 
+  #invoiceEmail:
+  #  type: string
+  #  format: email
+  #  example: invoice@a-company.com
+  #  description: The company invoice email
   telephone:
     type: string
     example: "408-867-5309"
@@ -24,25 +24,25 @@ properties:
     type: string
     example: "http://www.a-company.com"
     description: "Url to the organization site."
-  numberOfEmployees:
-    type: number
-    example: 5
-    description: Number of full time employees.
-  currentMonthlyTurnover:
-    type: string
-    example: 100000
-    description: "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
-  ownerType:
-    type: string
-    enum:
-      - ApplicantOwnMoreThan75Percent
-      - MultipleOwnersWithMoreThan25Percent
-      - NoOwnerWithMoreThan25Percent
-  owners:
-    type: array
-    items:
-      $ref: '#/definitions/OrganizationOwner'
-  iban:
-    type: string
-    example: DE89 3704 0044 0532 0130 00
-    description: International Bank Account Number. The company bank account for receiving out payment. 
+  #numberOfEmployees:
+  #  type: number
+  #  example: 5
+  #  description: Number of full time employees.
+  #currentMonthlyTurnover:
+  #  type: string
+  #  example: 100000
+  #  description: "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
+  #ownerType:
+  #  type: string
+  #  enum:
+  #    - ApplicantOwnMoreThan75Percent
+  #    - MultipleOwnersWithMoreThan25Percent
+  #    - NoOwnerWithMoreThan25Percent
+  #owners:
+  #  type: array
+  #  items:
+  #    $ref: '#/definitions/OrganizationOwner'
+  #iban:
+  #  type: string
+  #  example: DE89 3704 0044 0532 0130 00
+  #  description: International Bank Account Number. The company bank account for receiving out payment. 

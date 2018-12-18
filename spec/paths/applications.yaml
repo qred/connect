@@ -1,8 +1,8 @@
 
 post:
   tags:
-  - developers
-  summary: Add application
+  - applications
+  summary: Add loan application
   operationId: addApplication
   description: Send a loan application to Qred
   consumes:
