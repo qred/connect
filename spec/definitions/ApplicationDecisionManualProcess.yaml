@@ -1,5 +1,4 @@
-properties:
-  type: 
-    $ref: '#/definitions/ApplicationDecisionType'  
+allOf:
+  - $ref: '#/definitions/ApplicationDecision'
 example:
   type: ManualProcess

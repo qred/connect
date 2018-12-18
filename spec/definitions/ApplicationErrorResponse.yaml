@@ -1,7 +1,11 @@
+type: object
 properties:
-  property:
-    type: string
-    example: "amount"
-  description:
-    type: string
-    example: "Amount is a required field"
+  errors:
+    type: array
+    items:
+      $ref: '#/definitions/ApplicationErrorResponseItem'
+example:
+  { "errors":[{"property":"amount", "description": "Amount is a required field"},
+   {"property":"organization.organizationId", "description": "organizationId is a required field"},
+   {"property":"applicant.email", "description": "email is a required field"}
+  ] }

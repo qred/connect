@@ -5,21 +5,13 @@ properties:
     type: string
     format: email
     example: joe.smith@a-company.com
-  mobile:
-    type: string
-    example: "408-867-5309"
-    description: "The mobile phone number."
-  politicallyExposedPerson:
-    $ref: '#/definitions/PoliticallyExposedPerson'
-  personalId:
-    $ref: '#/definitions/PersonalId'
+  phone:
+    $ref: '#/definitions/PhoneNumber'
+  nationalIdentificationNumber:
+    $ref: '#/definitions/NationalIdentificationNumber'
   givenName:
     $ref: '#/definitions/GivenName'
   additionalName:
     $ref: '#/definitions/AdditionalName'
   familyName:
     $ref: '#/definitions/FamilyName'
-  dateOfBirth:
-    $ref: '#/definitions/DateOfBirth'
-  placeOfBirth:
-    $ref: '#/definitions/PlaceOfBirth'

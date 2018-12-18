@@ -17,6 +17,7 @@ properties:
     example: "company-specific-format.xml"
   base64Content:
     type: string 
-    example: "4530987p9257493875243098572398057432095"
+    format: byte
+    example: "U3dhZ2dlciByb2Nrcw=="
     description: >-
       Base64 encoded binary content.

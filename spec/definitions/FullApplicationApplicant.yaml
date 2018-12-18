@@ -1,0 +1,10 @@
+allOf:
+  - $ref: '#/definitions/ApplicationApplicant'
+  - type: object
+    properties:
+      politicallyExposedPerson:
+        $ref: '#/definitions/PoliticallyExposedPerson'
+      dateOfBirth:
+        $ref: '#/definitions/DateOfBirth'
+      placeOfBirth:
+        $ref: '#/definitions/PlaceOfBirth'

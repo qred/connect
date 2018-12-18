@@ -1,8 +1,9 @@
-properties:
-  type: 
-    $ref: '#/definitions/ApplicationDecisionType'  
-  rejectReason:
-    type: string
+allOf:
+  - $ref: '#/definitions/ApplicationDecision'
+  - type: object
+    properties:
+      rejectReason:
+        type: string
 example:
   type: Denied
   rejectReason: Due to previous problems with payments we regret that we have to reject the application.

@@ -1,14 +1,17 @@
-properties:
-  type: 
-    $ref: '#/definitions/ApplicationDecisionType'
-  amount:
-    type: number
-  term:
-    type: number
-  campaign:
-    type: string
-  offerUrl:
-    type: string
+allOf:
+  - $ref: '#/definitions/ApplicationDecision'
+  - type: object
+    properties:
+      amount:
+        type: number
+      term:
+        type: number
+      campaign:
+        type: string
+      offerUrl:
+        type: string
+        format: uri
+        description: Url for the user to see and accept the offer given by Qred
 example:
   type: Approved
   amount: 5000

@@ -1,0 +1,13 @@
+type: string
+example: "197012012344"
+description: >
+  ### Short explanation
+  
+  The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain. 
+  For Denmark that would be CPR. For Sweden it would be personal number.
+  
+  ### Longer explanation
+
+  The value does not need to be a number. For some countries it's a string. However, since the accepted name on wikipedia is national identification number, we accept the inconsistancy.
+  For further information see [wikipedia](https://en.wikipedia.org/wiki/National_identification_number).
+

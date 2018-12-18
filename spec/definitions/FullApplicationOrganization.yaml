@@ -1,0 +1,22 @@
+allOf:
+  - $ref: '#/definitions/ApplicationOrganization'
+  - type: object
+    properties:
+      numberOfEmployees:
+        type: number
+        example: 5
+        description: Number of full time employees.
+      currentMonthlyTurnover:
+        type: string
+        example: 100000
+        description: "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
+      owners:
+        type: array
+        items:
+          $ref: '#/definitions/OrganizationOwner'
+      iban:
+        type: string
+        example: DE89 3704 0044 0532 0130 00
+        description: >
+          International Bank Account Number. The company bank account for receiving out payment. 
+        

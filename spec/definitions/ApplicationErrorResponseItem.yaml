@@ -1,0 +1,8 @@
+properties:
+  property:
+    type: string
+    example: "amount"
+  description:
+    type: string
+    example: "Amount is a required field"
+
