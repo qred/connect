@@ -10,12 +10,6 @@ allOf:
         type: string
         example: 100000
         description: "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
-      ownerType:
-        type: string
-        enum:
-          - OnePersonOwnMoreThan75Percent
-          - MultipleOwnersWithMoreThan25Percent
-          - NoOwnerWithMoreThan25Percent
       owners:
         type: array
         items:
