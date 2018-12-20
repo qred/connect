@@ -30,10 +30,13 @@ info:
     
     To get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)
 
+    ## Terms of Service
     
+    The terms of service will be clarified once you have a partner agreement with Qred.
+
   version: 0.1.2
   title: Qred Connect
-  termsOfService: 'https://connect.qred.com/terms/'
+  termsOfService: '#section/Terms-of-Service'
   contact:
     email: techsupport@qred.com
     url: '#section/Contact'
