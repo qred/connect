@@ -3,7 +3,7 @@ post:
   tags:
   - applications
   summary: Add loan application
-  operationId: addApplication
+  operationId: add
   description: Send a loan application to Qred
   consumes:
   - application/json

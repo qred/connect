@@ -1,6 +1,7 @@
 #  /applications/{id}:
  get:
     summary: Status of loan application
+    operationId: get
     description: Get summary information about loan application from Qred
     tags:
       - applications
