@@ -1,14 +1,25 @@
 required:
-- vatIdentificationNumber
+- nationalOrganizationNumber
 
 properties:
-  vatIdentificationNumber:
+  nationalOrganizationNumber:
     type: string
-    example: "SE2344473928"
+    example: "2344473928"
     description: >
-      The VAT identifier is used to identify organizations in various countries.
-      In Sweden that would be a prefixed organization number. In Denmark you have prefixed CVR-number. 
-      See [VAT identification number](https://en.wikipedia.org/wiki/VAT_identification_number) for more information.
+      The national organization number is the "number" used to identify organizations in a country.
+      In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html).
+
+      ### Why not VAT ID?
+
+      Note that a company can in some cases have many VAT numbers. 
+      
+      ### Tax ID?
+
+      In many countries the national organization number and tax identification number are the same.
+
+      ### What about DUNS, LEI codes, et.c. ?
+
+      We only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).
   email:
     type: string
     format: email
