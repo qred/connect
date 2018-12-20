@@ -52,7 +52,7 @@ paths:
       tags:
         - applications
       summary: Add loan application
-      operationId: addApplication
+      operationId: add
       description: Send a loan application to Qred
       consumes:
         - application/json
@@ -117,7 +117,7 @@ paths:
       tags:
         - full applications
       summary: Add a full loan application with advanced fields
-      operationId: addFullApplication
+      operationId: addFull
       description: |-
         Send a loan application to Qred. This part of the API gives you the ability to send in further fields to simplify the qualification of the of the customer application.
         ### Restricted usage
@@ -146,6 +146,7 @@ paths:
   '/applications/{applicationid}':
     get:
       summary: Status of loan application
+      operationId: get
       description: Get summary information about loan application from Qred
       tags:
         - applications
