@@ -26,7 +26,7 @@ info:
       * Test: https://test.qred.com/api
       * Production: https://connect.qred.com/api
     
-  version: 0.1.1
+  version: 0.1.2
   title: Qred Connect
   termsOfService: 'https://connect.qred.com/terms/'
   contact:
