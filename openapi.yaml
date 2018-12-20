@@ -6,26 +6,31 @@ basePath: /loans/v1
 info:
   description: |
     Qred Connect - API Documentation
-    # Introduction
+    ## Introduction
     Qred's Partner API "Qred Connect" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.
-    # Technical Specifications
+    ### Technical Specifications
     Notice that for Qred Connect:
 
       * Qred's APIs are built according to industry standard practices for third-party RESTful web services
       * Strong validation, authentication & encryption
       * Entry points for requests are sent via HTTP over SSL (all information is encrypted)
 
-    # How to get started
+    ### How to get started
     There are two environments - Test and Production.
 
       * Test: https://test.qred.com/api
       * Production: https://connect.qred.com/api
-  version: 0.1.1
+
+    ## Contact
+    To get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)
+    ## Terms of Service
+    The terms of service will be clarified once you have a partner agreement with Qred.
+  version: 0.1.2
   title: Qred Connect
-  termsOfService: 'https://connect.qred.com/terms/'
+  termsOfService: '#section/Terms-of-Service'
   contact:
     email: techsupport@qred.com
-    url: 'https://connect.qred.com/contact'
+    url: '#section/Contact'
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -275,13 +280,17 @@ definitions:
         example: Amount is a required field
   ApplicationOrganization:
     required:
-      - vatIdentificationNumber
+      - nationalOrganizationNumber
     properties:
-      vatIdentificationNumber:
+      nationalOrganizationNumber:
         type: string
-        example: SE2344473928
+        example: '2344473928'
         description: |
-          The VAT identifier is used to identify organizations in various countries. In Sweden that would be a prefixed organization number. In Denmark you have prefixed CVR-number.  See [VAT identification number](https://en.wikipedia.org/wiki/VAT_identification_number) for more information.
+          The national organization number is the "number" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In Holland it is [KVK number](https://www.kvk.nl/english/)
+          ### Why not VAT ID?
+          Note that a company can in some cases have many VAT numbers. 
+          ### What about DUNS, LEI codes, et.c. ?
+          We only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).
       email:
         type: string
         format: email
@@ -315,18 +324,19 @@ definitions:
   ApplicationRequest:
     required:
       - amount
-      - currency
       - organization
       - applicant
     properties:
       amount:
         type: number
         example: 15000
-        description: The amount in local currency that the company wants to borrow.
-      currency:
-        type: string
-        example: SEK
-        description: 'We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)'
+        description: |-
+          ### Amount
+          The amount in local currency that the company wants to borrow. 
+          ### Abbreviation
+          Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
+          ### Currency code of amount?
+          Note that the currency is specified when issued API key.
       promoCode:
         type: string
         example: SOMECAMPAIGN123
@@ -379,7 +389,13 @@ definitions:
           currentMonthlyTurnover:
             type: string
             example: 100000
-            description: 'Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK.'
+            description: |-
+              ### Short
+              Turnover for last month in national currency. 
+              ### Abbreviation
+              Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
+              ### Turnover currency code?
+              Note that the currency is specified when issued API key.
           owners:
             type: array
             items:
@@ -410,10 +426,11 @@ definitions:
     type: string
     example: '197012012344'
     description: |
-      ### Short explanation
-      The Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain.  For Denmark that would be CPR. For Sweden it would be personal number.
-      ### Longer explanation
-      The value does not need to be a number. For some countries it's a string. However, since the accepted name on wikipedia is national identification number, we accept the inconsistancy. For further information see [wikipedia](https://en.wikipedia.org/wiki/National_identification_number).
+      ### Short
+      The Tax / Fiscal ID of the person, e.g. the TIN in the US, CIF/NIF in Spain, [CPR](https://international.kk.dk/artikel/how-do-i-get-cpr-number) in Denmark, [Personal Identity Code](https://vrk.fi/en/personal-identity-code1) in Finland, or [personal number](https://skatteverket.se/privat/folkbokforing/personnummerochsamordningsnummer.4.3810a01c150939e893f18c29.html) in Sweden. 
+      ### In the EU
+      Some EU countries have a TIN. Some EU countries do not have a unique identification number. In that case the identification number will be some other type of information that can help identify the person.  
+      The European commission has further information about [TIN](https://ec.europa.eu/taxation_customs/business/tax-cooperation-control/administrative-cooperation/tax-identification-numbers-tin_en).
   OrganizationOwner:
     properties:
       nationalIdentificationNumber:

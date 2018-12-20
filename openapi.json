@@ -6,13 +6,13 @@
   "host": "api.qred.com",
   "basePath": "/loans/v1",
   "info": {
-    "description": "Qred Connect - API Documentation\n# Introduction\nQred's Partner API \"Qred Connect\" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n# Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n\n# How to get started\nThere are two environments - Test and Production.\n\n  * Test: https://test.qred.com/api\n  * Production: https://connect.qred.com/api\n",
-    "version": "0.1.1",
+    "description": "Qred Connect - API Documentation\n## Introduction\nQred's Partner API \"Qred Connect\" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n### Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n\n### How to get started\nThere are two environments - Test and Production.\n\n  * Test: https://test.qred.com/api\n  * Production: https://connect.qred.com/api\n\n## Contact\nTo get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)\n## Terms of Service\nThe terms of service will be clarified once you have a partner agreement with Qred.\n",
+    "version": "0.1.2",
     "title": "Qred Connect",
-    "termsOfService": "https://connect.qred.com/terms/",
+    "termsOfService": "#section/Terms-of-Service",
     "contact": {
       "email": "techsupport@qred.com",
-      "url": "https://connect.qred.com/contact"
+      "url": "#section/Contact"
     },
     "license": {
       "name": "Apache 2.0",
@@ -354,13 +354,13 @@
     },
     "ApplicationOrganization": {
       "required": [
-        "vatIdentificationNumber"
+        "nationalOrganizationNumber"
       ],
       "properties": {
-        "vatIdentificationNumber": {
+        "nationalOrganizationNumber": {
           "type": "string",
-          "example": "SE2344473928",
-          "description": "The VAT identifier is used to identify organizations in various countries. In Sweden that would be a prefixed organization number. In Denmark you have prefixed CVR-number.  See [VAT identification number](https://en.wikipedia.org/wiki/VAT_identification_number) for more information.\n"
+          "example": "2344473928",
+          "description": "The national organization number is the \"number\" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In Holland it is [KVK number](https://www.kvk.nl/english/)\n### Why not VAT ID?\nNote that a company can in some cases have many VAT numbers. \n### What about DUNS, LEI codes, et.c. ?\nWe only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).\n"
         },
         "email": {
           "type": "string",
@@ -409,7 +409,6 @@
     "ApplicationRequest": {
       "required": [
         "amount",
-        "currency",
         "organization",
         "applicant"
       ],
@@ -417,12 +416,7 @@
         "amount": {
           "type": "number",
           "example": 15000,
-          "description": "The amount in local currency that the company wants to borrow."
-        },
-        "currency": {
-          "type": "string",
-          "example": "SEK",
-          "description": "We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)"
+          "description": "### Amount\nThe amount in local currency that the company wants to borrow. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Currency code of amount?\nNote that the currency is specified when issued API key."
         },
         "promoCode": {
           "type": "string",
@@ -501,7 +495,7 @@
             "currentMonthlyTurnover": {
               "type": "string",
               "example": 100000,
-              "description": "Turnover for last month in national currency. Expected to be the full amount, i.e. 1 000 000 SEK implies 1 million SEK."
+              "description": "### Short\nTurnover for last month in national currency. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Turnover currency code?\nNote that the currency is specified when issued API key."
             },
             "owners": {
               "type": "array",
@@ -550,7 +544,7 @@
     "NationalIdentificationNumber": {
       "type": "string",
       "example": "197012012344",
-      "description": "### Short explanation\nThe Tax / Fiscal ID of the person, e.g. the TIN in the US or the CIF/NIF in Spain.  For Denmark that would be CPR. For Sweden it would be personal number.\n### Longer explanation\nThe value does not need to be a number. For some countries it's a string. However, since the accepted name on wikipedia is national identification number, we accept the inconsistancy. For further information see [wikipedia](https://en.wikipedia.org/wiki/National_identification_number).\n"
+      "description": "### Short\nThe Tax / Fiscal ID of the person, e.g. the TIN in the US, CIF/NIF in Spain, [CPR](https://international.kk.dk/artikel/how-do-i-get-cpr-number) in Denmark, [Personal Identity Code](https://vrk.fi/en/personal-identity-code1) in Finland, or [personal number](https://skatteverket.se/privat/folkbokforing/personnummerochsamordningsnummer.4.3810a01c150939e893f18c29.html) in Sweden. \n### In the EU\nSome EU countries have a TIN. Some EU countries do not have a unique identification number. In that case the identification number will be some other type of information that can help identify the person.  \nThe European commission has further information about [TIN](https://ec.europa.eu/taxation_customs/business/tax-cooperation-control/administrative-cooperation/tax-identification-numbers-tin_en).\n"
     },
     "OrganizationOwner": {
       "properties": {
