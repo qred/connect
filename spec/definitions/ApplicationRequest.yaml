@@ -1,18 +1,23 @@
 required:
 - amount
-- currency
 - organization
 - applicant
 properties:
   amount:
     type: number
     example: 15000.00
-    description: "The amount in local currency that the company wants to borrow."
-  currency:
-    type: string
-    example: SEK
     description: >-
-      We expect to receive the currency in [ISO 4217 currency format](https://en.wikipedia.org/wiki/ISO_4217)
+      ### Amount
+
+      The amount in local currency that the company wants to borrow. 
+      
+      ### Abbreviation
+
+      Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
+
+      ### Currency code of amount?
+
+      Note that the currency is specified when issued API key.
   promoCode:
     type: string
     example: SOMECAMPAIGN123
