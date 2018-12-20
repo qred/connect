@@ -13,10 +13,6 @@ properties:
 
       Note that a company can in some cases have many VAT numbers. 
       
-      ### Tax ID?
-
-      In many countries the national organization number and tax identification number are the same.
-
       ### What about DUNS, LEI codes, et.c. ?
 
       We only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).
