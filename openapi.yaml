@@ -286,7 +286,7 @@ definitions:
         type: string
         example: '2344473928'
         description: |
-          The national organization number is the "number" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In Holland it is [KVK number](https://www.kvk.nl/english/)
+          The national organization number is the "number" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In the Netherlands it is [KVK number](https://www.kvk.nl/english/)
           ### Why not VAT ID?
           Note that a company can in some cases have many VAT numbers. 
           ### What about DUNS, LEI codes, et.c. ?
