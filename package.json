@@ -2,7 +2,7 @@
   "name": "qred-connect-api",
   "version": "1.0.0",
   "dependencies": {
-    "swagger-repo": "^2.0.0-rc.6"
+    "swagger-repo": "^2.0.0-rc.8"
   },
   "private": true,
   "scripts": {

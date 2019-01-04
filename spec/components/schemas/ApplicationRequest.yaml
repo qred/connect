@@ -1,0 +1,23 @@
+required:
+- amount
+- organization
+- applicant
+properties:
+  amount:
+    $ref: '#/components/schemas/Amount'
+  promoCode:
+    $ref: '#/components/schemas/PromoCode'
+  term:
+    $ref: '#/components/schemas/LoanTerm'
+  purposeOfLoan:
+    $ref: '#/components/schemas/PurposeOfLoan'
+  organization:
+    $ref: '#/components/schemas/ApplicationOrganization'
+  applicant:
+    $ref: '#/components/schemas/ApplicationApplicant'
+  files:
+    $ref: '#/components/schemas/UploadBase64Files'
+  $type:
+    type: string
+    example: simple
+    description: Note that `$type` must be `full` in order to send in further information.

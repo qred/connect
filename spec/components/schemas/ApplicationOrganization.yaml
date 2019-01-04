@@ -22,7 +22,7 @@ properties:
     example: invoice@a-company.com
     description: Company email 
   phone:
-    $ref: '#/definitions/PhoneNumber'
+    $ref: '#/components/schemas/PhoneNumber'
   url:
     type: string
     format: uri

@@ -1,6 +1,8 @@
 allOf:
-  - $ref: '#/definitions/ApplicationOrganization'
+  - $ref: '#/components/schemas/ApplicationOrganization'
   - type: object
+    required:
+    - $type
     properties:
       numberOfEmployees:
         type: number
@@ -24,10 +26,13 @@ allOf:
       owners:
         type: array
         items:
-          $ref: '#/definitions/OrganizationOwner'
+          $ref: '#/components/schemas/OrganizationOwner'
       iban:
         type: string
         example: DE89 3704 0044 0532 0130 00
         description: >
           International Bank Account Number. The company bank account for receiving out payment. 
-        
+      $type:
+        type: string
+        example: full
+        description: Note that `$type` must be `full` in order to send in further information.

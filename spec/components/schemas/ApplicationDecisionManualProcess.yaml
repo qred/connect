@@ -1,0 +1,4 @@
+allOf:
+  - $ref: '#/components/schemas/ApplicationDecision'
+example:
+  type: ManualProcess

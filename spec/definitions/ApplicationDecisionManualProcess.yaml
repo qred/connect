@@ -1,4 +1,0 @@
-allOf:
-  - $ref: '#/definitions/ApplicationDecision'
-example:
-  type: ManualProcess

@@ -1,5 +1,0 @@
-required:
-- decision
-properties:
-  decision:
-    $ref: '#/definitions/ApplicationDecisionType'

@@ -1,5 +1,5 @@
 allOf:
-  - $ref: '#/definitions/ApplicationDecision'
+  - $ref: '#/components/schemas/ApplicationDecision'
   - type: object
     properties:
       amount:
