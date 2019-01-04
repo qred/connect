@@ -1,12 +1,17 @@
 {
-  "swagger": "2.0",
-  "schemes": [
-    "https"
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "https://api.qred.com/loans/v1",
+      "description": "Live Server"
+    },
+    {
+      "url": "https://sandbox.qred.com/loans/v1",
+      "description": "Sandbox Server"
+    }
   ],
-  "host": "api.qred.com",
-  "basePath": "/loans/v1",
   "info": {
-    "description": "Qred Connect - API Documentation\n## Introduction\nQred's Partner API \"Qred Connect\" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n### Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n\n### How to get started\nThere are two environments - Test and Production.\n\n  * Test: https://test.qred.com/api\n  * Production: https://connect.qred.com/api\n\n## Contact\nTo get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)\n## Terms of Service\nThe terms of service will be clarified once you have a partner agreement with Qred.\n",
+    "description": "Qred Connect - API Documentation\n## Introduction\nQred's Partner API \"Qred Connect\" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n### Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n\n### How to get started\nThere are two environments - Test and Production.\n\n  * Sandbox: https://sandbox.qred.com\n  * Production: https://api.qred.com\n\n## Contact\nTo get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)\n## Terms of Service\nThe terms of service will be clarified once you have a partner agreement with Qred.\n",
     "version": "0.1.2",
     "title": "Qred Connect",
     "termsOfService": "#section/Terms-of-Service",
@@ -22,21 +27,10 @@
       "url": "https://qred.com/img/qred-logo-mobile-green.png"
     }
   },
-  "securityDefinitions": {
-    "api_key": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "api_key"
-    }
-  },
   "tags": [
     {
       "name": "applications",
       "description": "Create loan applications on behalf of your customers"
-    },
-    {
-      "name": "full applications",
-      "description": "Create loan applications with a full set of fields available for advanced users of the Qred API"
     }
   ],
   "paths": {
@@ -47,34 +41,49 @@
         ],
         "summary": "Add loan application",
         "operationId": "add",
-        "description": "Send a loan application to Qred",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "application",
-            "description": "Application to add",
-            "schema": {
-              "$ref": "#/definitions/ApplicationRequest"
+        "description": "Send a loan application to Qred. \n### Full application request\nYou can also send in further fields to simplify the qualification of the of the customer application.\nThe default is the reduced request. By adding `$type:\"full\"` you can send in further information.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/ApplicationRequest"
+                  },
+                  {
+                    "$ref": "#/components/schemas/FullApplicationRequest"
+                  }
+                ],
+                "discriminator": {
+                  "propertyName": "$type",
+                  "mapping": {
+                    "simple": "#/components/schemas/ApplicationRequest",
+                    "full": "#/components/schemas/FullApplicationRequest"
+                  }
+                }
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "item created",
-            "schema": {
-              "$ref": "#/definitions/ApplicationCreateResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationCreateResponse"
+                }
+              }
             }
           },
           "400": {
             "description": "invalid input, object invalid",
-            "schema": {
-              "$ref": "#/definitions/ApplicationErrorResponse"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationErrorResponse"
+                }
+              }
             }
           }
         },
@@ -91,51 +100,6 @@
         ]
       }
     },
-    "/applications/": {
-      "post": {
-        "tags": [
-          "full applications"
-        ],
-        "summary": "Add a full loan application with advanced fields",
-        "operationId": "addFull",
-        "description": "Send a loan application to Qred. This part of the API gives you the ability to send in further fields to simplify the qualification of the of the customer application.\n### Restricted usage\nNote however that this API will not be available for all users of the Qred Connect API. You can sign up for it by contacting Qred.",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "application",
-            "description": "Application to add",
-            "schema": {
-              "$ref": "#/definitions/FullApplicationRequest"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "item created",
-            "schema": {
-              "$ref": "#/definitions/ApplicationCreateResponse"
-            }
-          },
-          "400": {
-            "description": "invalid input, object invalid",
-            "schema": {
-              "$ref": "#/definitions/ApplicationErrorResponse"
-            }
-          }
-        },
-        "security": [
-          {
-            "api_key": []
-          }
-        ]
-      }
-    },
     "/applications/{applicationid}": {
       "get": {
         "summary": "Status of loan application",
@@ -146,33 +110,44 @@
         ],
         "parameters": [
           {
-            "name": "applicationid",
+            "name": "applicationId",
             "in": "path",
             "description": "The id of the application",
             "required": true,
-            "type": "string"
+            "schema": {
+              "type": "string"
+            }
           }
-        ],
-        "produces": [
-          "application/json"
         ],
         "responses": {
           "200": {
             "description": "Found application with id",
-            "schema": {
-              "$ref": "#/definitions/ApplicationDecisionApproved"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDecisionApproved"
+                }
+              }
             }
           },
           "210": {
             "description": "Found application with id",
-            "schema": {
-              "$ref": "#/definitions/ApplicationDecisionManualProcess"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDecisionManualProcess"
+                }
+              }
             }
           },
           "211": {
             "description": "Found application with id",
-            "schema": {
-              "$ref": "#/definitions/ApplicationDecisionRejected"
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApplicationDecisionRejected"
+                }
+              }
             }
           },
           "404": {
@@ -187,435 +162,504 @@
       }
     }
   },
-  "definitions": {
-    "AdditionalName": {
-      "type": "string",
-      "example": "Daniels",
-      "description": "An additional name for a Person, can be used for a middle name."
-    },
-    "ApplicationApplicant": {
-      "required": [
-        "email"
-      ],
-      "properties": {
-        "email": {
-          "type": "string",
-          "format": "email",
-          "example": "joe.smith@a-company.com"
-        },
-        "phone": {
-          "$ref": "#/definitions/PhoneNumber"
-        },
-        "nationalIdentificationNumber": {
-          "$ref": "#/definitions/NationalIdentificationNumber"
-        },
-        "givenName": {
-          "$ref": "#/definitions/GivenName"
-        },
-        "additionalName": {
-          "$ref": "#/definitions/AdditionalName"
-        },
-        "familyName": {
-          "$ref": "#/definitions/FamilyName"
-        }
-      }
-    },
-    "ApplicationCreateResponse": {
-      "properties": {
-        "id": {
-          "type": "string",
-          "example": "APP-32444"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "example": "https://api.qred.com/loans/v1/applications/APP-32444"
-        }
-      }
-    },
-    "ApplicationDecision": {
-      "required": [
-        "decision"
-      ],
-      "properties": {
-        "decision": {
-          "$ref": "#/definitions/ApplicationDecisionType"
-        }
-      }
-    },
-    "ApplicationDecisionApproved": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ApplicationDecision"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "amount": {
-              "type": "number"
-            },
-            "term": {
-              "type": "number"
-            },
-            "campaign": {
-              "type": "string"
-            },
-            "offerUrl": {
-              "type": "string",
-              "format": "uri",
-              "description": "Url for the user to see and accept the offer given by Qred"
-            }
-          }
-        }
-      ],
-      "example": {
-        "type": "Approved",
-        "amount": 5000,
-        "term": 12,
-        "campaign": "Spring Campaign",
-        "offerUrl": "https://qred.com/link-to-offer?id=offer-id"
-      }
-    },
-    "ApplicationDecisionManualProcess": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ApplicationDecision"
-        }
-      ],
-      "example": {
-        "type": "ManualProcess"
-      }
-    },
-    "ApplicationDecisionRejected": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ApplicationDecision"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "rejectReason": {
-              "type": "string"
-            }
-          }
-        }
-      ],
-      "example": {
-        "type": "Denied",
-        "rejectReason": "Due to previous problems with payments we regret that we have to reject the application."
-      }
-    },
-    "ApplicationDecisionType": {
-      "type": "string",
-      "example": "Approved",
-      "enum": [
-        "Approved",
-        "Denied",
-        "ManualProcess"
-      ]
-    },
-    "ApplicationErrorResponse": {
-      "type": "object",
-      "properties": {
-        "errors": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ApplicationErrorResponseItem"
+  "components": {
+    "schemas": {
+      "AdditionalName": {
+        "type": "string",
+        "example": "Daniels",
+        "description": "An additional name for a Person, can be used for a middle name."
+      },
+      "Amount": {
+        "type": "number",
+        "example": 15000,
+        "description": "### Amount\nThe amount in local currency that the company wants to borrow. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Currency code of amount?\nNote that the currency is specified when issued API key."
+      },
+      "ApplicationApplicant": {
+        "required": [
+          "email"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "joe.smith@a-company.com"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/PhoneNumber"
+          },
+          "nationalIdentificationNumber": {
+            "$ref": "#/components/schemas/NationalIdentificationNumber"
+          },
+          "givenName": {
+            "$ref": "#/components/schemas/GivenName"
+          },
+          "additionalName": {
+            "$ref": "#/components/schemas/AdditionalName"
+          },
+          "familyName": {
+            "$ref": "#/components/schemas/FamilyName"
           }
         }
       },
-      "example": {
-        "errors": [
+      "ApplicationCreateResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "APP-32444"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://api.qred.com/loans/v1/applications/APP-32444"
+          }
+        }
+      },
+      "ApplicationDecision": {
+        "required": [
+          "decision"
+        ],
+        "properties": {
+          "decision": {
+            "$ref": "#/components/schemas/ApplicationDecisionType"
+          }
+        }
+      },
+      "ApplicationDecisionApproved": {
+        "allOf": [
           {
-            "property": "amount",
-            "description": "Amount is a required field"
+            "$ref": "#/components/schemas/ApplicationDecision"
           },
           {
-            "property": "organization.organizationId",
-            "description": "organizationId is a required field"
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number"
+              },
+              "term": {
+                "type": "number"
+              },
+              "campaign": {
+                "type": "string"
+              },
+              "offerUrl": {
+                "type": "string",
+                "format": "uri",
+                "description": "Url for the user to see and accept the offer given by Qred"
+              }
+            }
+          }
+        ],
+        "example": {
+          "type": "Approved",
+          "amount": 5000,
+          "term": 12,
+          "campaign": "Spring Campaign",
+          "offerUrl": "https://qred.com/link-to-offer?id=offer-id"
+        }
+      },
+      "ApplicationDecisionManualProcess": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApplicationDecision"
+          }
+        ],
+        "example": {
+          "type": "ManualProcess"
+        }
+      },
+      "ApplicationDecisionRejected": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApplicationDecision"
           },
           {
-            "property": "applicant.email",
-            "description": "email is a required field"
+            "type": "object",
+            "properties": {
+              "rejectReason": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "example": {
+          "type": "Denied",
+          "rejectReason": "Due to previous problems with payments we regret that we have to reject the application."
+        }
+      },
+      "ApplicationDecisionType": {
+        "type": "string",
+        "example": "Approved",
+        "enum": [
+          "Approved",
+          "Denied",
+          "ManualProcess"
+        ]
+      },
+      "ApplicationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ApplicationErrorResponseItem"
+            }
+          }
+        },
+        "example": {
+          "errors": [
+            {
+              "property": "amount",
+              "description": "Amount is a required field"
+            },
+            {
+              "property": "organization.organizationId",
+              "description": "organizationId is a required field"
+            },
+            {
+              "property": "applicant.email",
+              "description": "email is a required field"
+            }
+          ]
+        }
+      },
+      "ApplicationErrorResponseItem": {
+        "properties": {
+          "property": {
+            "type": "string",
+            "example": "amount"
+          },
+          "description": {
+            "type": "string",
+            "example": "Amount is a required field"
+          }
+        }
+      },
+      "ApplicationOrganization": {
+        "required": [
+          "nationalOrganizationNumber"
+        ],
+        "properties": {
+          "nationalOrganizationNumber": {
+            "type": "string",
+            "example": "2344473928",
+            "description": "The national organization number is the \"number\" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In the Netherlands it is [KVK number](https://www.kvk.nl/english/)\n### Why not VAT ID?\nNote that a company can in some cases have many VAT numbers. \n### What about DUNS, LEI codes, et.c. ?\nWe only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).\n"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "invoice@a-company.com",
+            "description": "Company email"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/PhoneNumber"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "http://www.a-company.com",
+            "description": "Url to the organization site."
+          }
+        }
+      },
+      "ApplicationPoliticallyExposedPerson": {
+        "properties": {
+          "nationalIdentificationNumber": {
+            "$ref": "#/components/schemas/NationalIdentificationNumber"
+          },
+          "givenName": {
+            "$ref": "#/components/schemas/GivenName"
+          },
+          "additionalName": {
+            "$ref": "#/components/schemas/AdditionalName"
+          },
+          "familyName": {
+            "$ref": "#/components/schemas/FamilyName"
+          },
+          "dateOfBirth": {
+            "$ref": "#/components/schemas/DateOfBirth"
+          },
+          "placeOfBirth": {
+            "$ref": "#/components/schemas/PlaceOfBirth"
+          },
+          "description": {
+            "type": "string",
+            "example": "Member of the parliament",
+            "description": "How is the person politically exposed."
+          }
+        }
+      },
+      "ApplicationRequest": {
+        "required": [
+          "amount",
+          "organization",
+          "applicant"
+        ],
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Amount"
+          },
+          "promoCode": {
+            "$ref": "#/components/schemas/PromoCode"
+          },
+          "term": {
+            "$ref": "#/components/schemas/LoanTerm"
+          },
+          "purposeOfLoan": {
+            "$ref": "#/components/schemas/PurposeOfLoan"
+          },
+          "organization": {
+            "$ref": "#/components/schemas/ApplicationOrganization"
+          },
+          "applicant": {
+            "$ref": "#/components/schemas/ApplicationApplicant"
+          },
+          "files": {
+            "$ref": "#/components/schemas/UploadBase64Files"
+          },
+          "$type": {
+            "type": "string",
+            "example": "simple",
+            "description": "Note that `$type` must be `full` in order to send in further information."
+          }
+        }
+      },
+      "DateOfBirth": {
+        "type": "string",
+        "example": "19701201",
+        "description": "When the person was born. Expected format is `YYYYMMDD`"
+      },
+      "FamilyName": {
+        "type": "string",
+        "example": "Smith",
+        "description": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property."
+      },
+      "FullApplicationApplicant": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApplicationApplicant"
+          },
+          {
+            "type": "object",
+            "required": [
+              "$type"
+            ],
+            "properties": {
+              "politicallyExposedPerson": {
+                "$ref": "#/components/schemas/PoliticallyExposedPerson"
+              },
+              "dateOfBirth": {
+                "$ref": "#/components/schemas/DateOfBirth"
+              },
+              "placeOfBirth": {
+                "$ref": "#/components/schemas/PlaceOfBirth"
+              },
+              "$type": {
+                "type": "string",
+                "example": "full",
+                "description": "Note that `$type` must be `full` in order to send in further information."
+              }
+            }
           }
         ]
-      }
-    },
-    "ApplicationErrorResponseItem": {
-      "properties": {
-        "property": {
-          "type": "string",
-          "example": "amount"
-        },
-        "description": {
-          "type": "string",
-          "example": "Amount is a required field"
-        }
-      }
-    },
-    "ApplicationOrganization": {
-      "required": [
-        "nationalOrganizationNumber"
-      ],
-      "properties": {
-        "nationalOrganizationNumber": {
-          "type": "string",
-          "example": "2344473928",
-          "description": "The national organization number is the \"number\" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In the Netherlands it is [KVK number](https://www.kvk.nl/english/)\n### Why not VAT ID?\nNote that a company can in some cases have many VAT numbers. \n### What about DUNS, LEI codes, et.c. ?\nWe only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).\n"
-        },
-        "email": {
-          "type": "string",
-          "format": "email",
-          "example": "invoice@a-company.com",
-          "description": "Company email"
-        },
-        "phone": {
-          "$ref": "#/definitions/PhoneNumber"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "example": "http://www.a-company.com",
-          "description": "Url to the organization site."
-        }
-      }
-    },
-    "ApplicationPoliticallyExposedPerson": {
-      "properties": {
-        "nationalIdentificationNumber": {
-          "$ref": "#/definitions/NationalIdentificationNumber"
-        },
-        "givenName": {
-          "$ref": "#/definitions/GivenName"
-        },
-        "additionalName": {
-          "$ref": "#/definitions/AdditionalName"
-        },
-        "familyName": {
-          "$ref": "#/definitions/FamilyName"
-        },
-        "dateOfBirth": {
-          "$ref": "#/definitions/DateOfBirth"
-        },
-        "placeOfBirth": {
-          "$ref": "#/definitions/PlaceOfBirth"
-        },
-        "description": {
-          "type": "string",
-          "example": "Member of the parliament",
-          "description": "How is the person politically exposed."
-        }
-      }
-    },
-    "ApplicationRequest": {
-      "required": [
-        "amount",
-        "organization",
-        "applicant"
-      ],
-      "properties": {
-        "amount": {
-          "type": "number",
-          "example": 15000,
-          "description": "### Amount\nThe amount in local currency that the company wants to borrow. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Currency code of amount?\nNote that the currency is specified when issued API key."
-        },
-        "promoCode": {
-          "type": "string",
-          "example": "SOMECAMPAIGN123",
-          "description": "Promo code used to give the customer a discount or extra benefits."
-        },
-        "term": {
-          "type": "number",
-          "example": 12,
-          "description": "Loan term number of months"
-        },
-        "purposeOfLoan": {
-          "type": "string",
-          "example": "I need to increase liquidity due to upcoming costs associated with participation in branch conference",
-          "description": "Company explains why they need the business loan"
-        },
-        "organization": {
-          "$ref": "#/definitions/ApplicationOrganization"
-        },
-        "applicant": {
-          "$ref": "#/definitions/ApplicationApplicant"
-        },
-        "files": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/UploadBase64File"
+      },
+      "FullApplicationOrganization": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ApplicationOrganization"
           },
-          "description": "Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer."
-        }
-      }
-    },
-    "DateOfBirth": {
-      "type": "string",
-      "example": "19701201",
-      "description": "When the person was born. Expected format is `YYYYMMDD`"
-    },
-    "FamilyName": {
-      "type": "string",
-      "example": "Smith",
-      "description": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property."
-    },
-    "FullApplicationApplicant": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ApplicationApplicant"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "politicallyExposedPerson": {
-              "$ref": "#/definitions/PoliticallyExposedPerson"
-            },
-            "dateOfBirth": {
-              "$ref": "#/definitions/DateOfBirth"
-            },
-            "placeOfBirth": {
-              "$ref": "#/definitions/PlaceOfBirth"
-            }
-          }
-        }
-      ]
-    },
-    "FullApplicationOrganization": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ApplicationOrganization"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "numberOfEmployees": {
-              "type": "number",
-              "example": 5,
-              "description": "Number of full time employees."
-            },
-            "currentMonthlyTurnover": {
-              "type": "string",
-              "example": 100000,
-              "description": "### Short\nTurnover for last month in national currency. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Turnover currency code?\nNote that the currency is specified when issued API key."
-            },
-            "owners": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/OrganizationOwner"
+          {
+            "type": "object",
+            "required": [
+              "$type"
+            ],
+            "properties": {
+              "numberOfEmployees": {
+                "type": "number",
+                "example": 5,
+                "description": "Number of full time employees."
+              },
+              "currentMonthlyTurnover": {
+                "type": "string",
+                "example": 100000,
+                "description": "### Short\nTurnover for last month in national currency. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Turnover currency code?\nNote that the currency is specified when issued API key."
+              },
+              "owners": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrganizationOwner"
+                }
+              },
+              "iban": {
+                "type": "string",
+                "example": "DE89 3704 0044 0532 0130 00",
+                "description": "International Bank Account Number. The company bank account for receiving out payment. \n"
+              },
+              "$type": {
+                "type": "string",
+                "example": "full",
+                "description": "Note that `$type` must be `full` in order to send in further information."
               }
-            },
-            "iban": {
-              "type": "string",
-              "example": "DE89 3704 0044 0532 0130 00",
-              "description": "International Bank Account Number. The company bank account for receiving out payment. \n"
             }
           }
-        }
-      ]
-    },
-    "FullApplicationRequest": {
-      "allOf": [
-        {
-          "$ref": "#/definitions/ApplicationRequest"
-        },
-        {
-          "type": "object",
-          "properties": {
-            "politicallyExposedPersons": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/ApplicationPoliticallyExposedPerson"
+        ]
+      },
+      "FullApplicationRequest": {
+        "required": [
+          "amount",
+          "organization",
+          "applicant",
+          "$type"
+        ],
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "$ref": "#/components/schemas/Amount"
+              },
+              "promoCode": {
+                "$ref": "#/components/schemas/PromoCode"
+              },
+              "term": {
+                "$ref": "#/components/schemas/LoanTerm"
+              },
+              "purposeOfLoan": {
+                "$ref": "#/components/schemas/PurposeOfLoan"
+              },
+              "organization": {
+                "$ref": "#/components/schemas/FullApplicationOrganization"
+              },
+              "applicant": {
+                "$ref": "#/components/schemas/FullApplicationApplicant"
+              },
+              "files": {
+                "$ref": "#/components/schemas/UploadBase64Files"
+              },
+              "politicallyExposedPersons": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ApplicationPoliticallyExposedPerson"
+                }
+              },
+              "$type": {
+                "type": "string",
+                "example": "full",
+                "description": "Note that `$type` must be `full` in order to send in further information."
               }
-            },
-            "organization": {
-              "$ref": "#/definitions/FullApplicationOrganization"
-            },
-            "applicant": {
-              "$ref": "#/definitions/FullApplicationApplicant"
             }
           }
-        }
-      ]
-    },
-    "GivenName": {
-      "type": "string",
-      "example": "Joe",
-      "description": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property."
-    },
-    "NationalIdentificationNumber": {
-      "type": "string",
-      "example": "197012012344",
-      "description": "### Short\nThe Tax / Fiscal ID of the person, e.g. the TIN in the US, CIF/NIF in Spain, [CPR](https://international.kk.dk/artikel/how-do-i-get-cpr-number) in Denmark, [Personal Identity Code](https://vrk.fi/en/personal-identity-code1) in Finland, or [personal number](https://skatteverket.se/privat/folkbokforing/personnummerochsamordningsnummer.4.3810a01c150939e893f18c29.html) in Sweden. \n### In the EU\nSome EU countries have a TIN. Some EU countries do not have a unique identification number. In that case the identification number will be some other type of information that can help identify the person.  \nThe European commission has further information about [TIN](https://ec.europa.eu/taxation_customs/business/tax-cooperation-control/administrative-cooperation/tax-identification-numbers-tin_en).\n"
-    },
-    "OrganizationOwner": {
-      "properties": {
-        "nationalIdentificationNumber": {
-          "$ref": "#/definitions/NationalIdentificationNumber"
-        },
-        "givenName": {
-          "$ref": "#/definitions/GivenName"
-        },
-        "additionalName": {
-          "$ref": "#/definitions/AdditionalName"
-        },
-        "familyName": {
-          "$ref": "#/definitions/FamilyName"
-        },
-        "ownerShipPercent": {
-          "type": "number",
-          "example": 75,
-          "description": "Ownership in percent."
-        },
-        "dateOfBirth": {
-          "$ref": "#/definitions/DateOfBirth"
-        },
-        "placeOfBirth": {
-          "$ref": "#/definitions/PlaceOfBirth"
-        }
-      }
-    },
-    "PhoneNumber": {
-      "type": "string",
-      "example": "+4688675309",
-      "description": "The phone number. Note that the phone number might not be sent as a number, see [E.161](https://en.wikipedia.org/wiki/E.161).  We prefer [E.164](https://en.wikipedia.org/wiki/E.164).\n"
-    },
-    "PlaceOfBirth": {
-      "type": "string",
-      "example": "Stockholm",
-      "description": "Place of birth."
-    },
-    "PoliticallyExposedPerson": {
-      "type": "boolean",
-      "example": false,
-      "description": "\"politically exposed person\" (PEP) is a term describing someone who has been entrusted with a prominent public function. A PEP generally presents a higher risk for potential involvement in bribery and corruption by virtue of their position and the influence that they may hold."
-    },
-    "UploadBase64File": {
-      "required": [
-        "filename",
-        "base64Content"
-      ],
-      "properties": {
-        "encodingFormat": {
-          "type": "array",
-          "items": {
-            "type": "string"
+        ]
+      },
+      "GivenName": {
+        "type": "string",
+        "example": "Joe",
+        "description": "Given name. In the U.S., the first name of a Person. This can be used along with familyName instead of the name property."
+      },
+      "LoanTerm": {
+        "type": "number",
+        "example": 12,
+        "description": "Loan term number of months"
+      },
+      "NationalIdentificationNumber": {
+        "type": "string",
+        "example": "197012012344",
+        "description": "### Short\nThe Tax / Fiscal ID of the person, e.g. the TIN in the US, CIF/NIF in Spain, [CPR](https://international.kk.dk/artikel/how-do-i-get-cpr-number) in Denmark, [Personal Identity Code](https://vrk.fi/en/personal-identity-code1) in Finland, or [personal number](https://skatteverket.se/privat/folkbokforing/personnummerochsamordningsnummer.4.3810a01c150939e893f18c29.html) in Sweden. \n### In the EU\nSome EU countries have a TIN. Some EU countries do not have a unique identification number. In that case the identification number will be some other type of information that can help identify the person.  \nThe European commission has further information about [TIN](https://ec.europa.eu/taxation_customs/business/tax-cooperation-control/administrative-cooperation/tax-identification-numbers-tin_en).\n"
+      },
+      "OrganizationOwner": {
+        "properties": {
+          "nationalIdentificationNumber": {
+            "$ref": "#/components/schemas/NationalIdentificationNumber"
           },
-          "example": [
-            "application/xml",
-            "https//api.a-company.com/transactions/v1"
-          ],
-          "description": "Media type typically expressed using a MIME format (see [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml) site and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.).\nUnregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. In the case of organization specific file format with a specific purpose that could be a url to schema definition. For instance, transaction data format defined by `a-company` (see the example) that may or may not be hosted at that url."
-        },
-        "filename": {
-          "type": "string",
-          "example": "company-specific-format.xml"
-        },
-        "base64Content": {
-          "type": "string",
-          "format": "byte",
-          "example": "U3dhZ2dlciByb2Nrcw==",
-          "description": "Base64 encoded binary content."
+          "givenName": {
+            "$ref": "#/components/schemas/GivenName"
+          },
+          "additionalName": {
+            "$ref": "#/components/schemas/AdditionalName"
+          },
+          "familyName": {
+            "$ref": "#/components/schemas/FamilyName"
+          },
+          "ownerShipPercent": {
+            "type": "number",
+            "example": 75,
+            "description": "Ownership in percent."
+          },
+          "dateOfBirth": {
+            "$ref": "#/components/schemas/DateOfBirth"
+          },
+          "placeOfBirth": {
+            "$ref": "#/components/schemas/PlaceOfBirth"
+          }
         }
+      },
+      "PhoneNumber": {
+        "type": "string",
+        "example": "+4688675309",
+        "description": "The phone number. Note that the phone number might not be sent as a number, see [E.161](https://en.wikipedia.org/wiki/E.161).  We prefer [E.164](https://en.wikipedia.org/wiki/E.164).\n"
+      },
+      "PlaceOfBirth": {
+        "type": "string",
+        "example": "Stockholm",
+        "description": "Place of birth."
+      },
+      "PoliticallyExposedPerson": {
+        "type": "boolean",
+        "example": false,
+        "description": "\"politically exposed person\" (PEP) is a term describing someone who has been entrusted with a prominent public function. A PEP generally presents a higher risk for potential involvement in bribery and corruption by virtue of their position and the influence that they may hold."
+      },
+      "PromoCode": {
+        "type": "string",
+        "example": "SOMECAMPAIGN123",
+        "description": "Promo code used to give the customer a discount or extra benefits."
+      },
+      "PurposeOfLoan": {
+        "type": "string",
+        "example": "I need to increase liquidity due to upcoming costs associated with participation in branch conference",
+        "description": "Company explains why they need the business loan"
+      },
+      "UploadBase64File": {
+        "required": [
+          "filename",
+          "base64Content"
+        ],
+        "properties": {
+          "encodingFormat": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "application/xml",
+              "https//api.a-company.com/transactions/v1"
+            ],
+            "description": "Media type typically expressed using a MIME format (see [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml) site and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.).\nUnregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. In the case of organization specific file format with a specific purpose that could be a url to schema definition. For instance, transaction data format defined by `a-company` (see the example) that may or may not be hosted at that url."
+          },
+          "filename": {
+            "type": "string",
+            "example": "company-specific-format.xml"
+          },
+          "base64Content": {
+            "type": "string",
+            "format": "byte",
+            "example": "U3dhZ2dlciByb2Nrcw==",
+            "description": "Base64 encoded binary content."
+          }
+        }
+      },
+      "UploadBase64Files": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/UploadBase64File"
+        },
+        "description": "Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer."
+      }
+    },
+    "securitySchemes": {
+      "api_key": {
+        "description": "When you sign up for an account, you are given your first secret API key.\n",
+        "type": "apiKey",
+        "in": "header",
+        "name": "api_key"
       }
     }
   }
