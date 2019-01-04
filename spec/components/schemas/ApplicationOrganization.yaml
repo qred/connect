@@ -1,6 +1,6 @@
 required:
 - nationalOrganizationNumber
-
+- $type
 properties:
   nationalOrganizationNumber:
     type: string
@@ -28,3 +28,7 @@ properties:
     format: uri
     example: "http://www.a-company.com"
     description: "Url to the organization site."
+  $type:
+    type: string
+    example: simple
+    description: Note that `$type` must be `full` in order to send in further information.
