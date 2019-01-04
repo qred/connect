@@ -116,7 +116,7 @@ paths:
             }
 
 
-  '/applications/{applicationid}':
+  '/applications/{applicationId}':
     get:
       summary: Status of loan application
       operationId: get
@@ -172,6 +172,7 @@ components:
     ApplicationApplicant:
       required:
         - email
+        - $type
       properties:
         email:
           type: string
@@ -187,6 +188,10 @@ components:
           $ref: '#/components/schemas/AdditionalName'
         familyName:
           $ref: '#/components/schemas/FamilyName'
+        $type:
+          type: string
+          example: simple
+          description: Note that `$type` must be `full` in order to send in further information.
     ApplicationCreateResponse:
       properties:
         id:
@@ -271,6 +276,7 @@ components:
     ApplicationOrganization:
       required:
         - nationalOrganizationNumber
+        - $type
       properties:
         nationalOrganizationNumber:
           type: string
@@ -293,6 +299,10 @@ components:
           format: uri
           example: 'http://www.a-company.com'
           description: Url to the organization site.
+        $type:
+          type: string
+          example: simple
+          description: Note that `$type` must be `full` in order to send in further information.
     ApplicationPoliticallyExposedPerson:
       properties:
         nationalIdentificationNumber:

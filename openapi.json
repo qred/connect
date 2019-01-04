@@ -100,7 +100,7 @@
         ]
       }
     },
-    "/applications/{applicationid}": {
+    "/applications/{applicationId}": {
       "get": {
         "summary": "Status of loan application",
         "operationId": "get",
@@ -176,7 +176,8 @@
       },
       "ApplicationApplicant": {
         "required": [
-          "email"
+          "email",
+          "$type"
         ],
         "properties": {
           "email": {
@@ -198,6 +199,11 @@
           },
           "familyName": {
             "$ref": "#/components/schemas/FamilyName"
+          },
+          "$type": {
+            "type": "string",
+            "example": "simple",
+            "description": "Note that `$type` must be `full` in order to send in further information."
           }
         }
       },
@@ -336,7 +342,8 @@
       },
       "ApplicationOrganization": {
         "required": [
-          "nationalOrganizationNumber"
+          "nationalOrganizationNumber",
+          "$type"
         ],
         "properties": {
           "nationalOrganizationNumber": {
@@ -358,6 +365,11 @@
             "format": "uri",
             "example": "http://www.a-company.com",
             "description": "Url to the organization site."
+          },
+          "$type": {
+            "type": "string",
+            "example": "simple",
+            "description": "Note that `$type` must be `full` in order to send in further information."
           }
         }
       },
