@@ -1,8 +1,9 @@
-swagger: '2.0'
-schemes:
-  - https
-host: api.qred.com
-basePath: /loans/v1
+openapi: '3.0.0'
+servers:
+  - url: 'https://api.qred.com/loans/v1'
+    description: Live Server
+  - url: 'https://sandbox.qred.com/loans/v1'
+    description: Sandbox Server
 info:
   description: >
     Qred Connect - API Documentation
@@ -23,8 +24,8 @@ info:
 
     There are two environments - Test and Production.
 
-      * Test: https://test.qred.com/api
-      * Production: https://connect.qred.com/api
+      * Sandbox: https://sandbox.qred.com
+      * Production: https://api.qred.com
 
     ## Contact
     
@@ -45,13 +46,6 @@ info:
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
   x-logo:
     url: 'https://qred.com/img/qred-logo-mobile-green.png'
-securityDefinitions:
-  api_key:
-    type: apiKey
-    in: header
-    name: api_key
 tags:
 - name: applications
   description: Create loan applications on behalf of your customers
-- name: full applications
-  description: Create loan applications with a full set of fields available for advanced users of the Qred API

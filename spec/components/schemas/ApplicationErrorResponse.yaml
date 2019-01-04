@@ -3,7 +3,7 @@ properties:
   errors:
     type: array
     items:
-      $ref: '#/definitions/ApplicationErrorResponseItem'
+      $ref: '#/components/schemas/ApplicationErrorResponseItem'
 example:
   { "errors":[{"property":"amount", "description": "Amount is a required field"},
    {"property":"organization.organizationId", "description": "organizationId is a required field"},

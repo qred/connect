@@ -4,25 +4,39 @@ post:
   - applications
   summary: Add loan application
   operationId: add
-  description: Send a loan application to Qred
-  consumes:
-  - application/json
-  produces:
-  - application/json
-  parameters:
-  - in: body
-    name: application
-    description: Application to add
-    schema:
-      $ref: '#/definitions/ApplicationRequest'
+  description: >-
+    Send a loan application to Qred. 
+    
+    ### Full application request
+
+    You can also send in further fields to simplify the qualification of the of the customer application.
+
+    The default is the reduced request. By adding `$type:"full"` you can send in further information.
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: '#/components/schemas/ApplicationRequest'
+            - $ref: '#/components/schemas/FullApplicationRequest'
+          discriminator:
+            propertyName: $type
+            mapping:
+              simple: '#/components/schemas/ApplicationRequest'
+              full: '#/components/schemas/FullApplicationRequest'              
   responses:
     201:
       description: item created
-      schema:
-        $ref: '#/definitions/ApplicationCreateResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplicationCreateResponse'
     400:
       description: invalid input, object invalid
-      schema:
-       $ref: '#/definitions/ApplicationErrorResponse'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplicationErrorResponse'
   security:
     - api_key: []

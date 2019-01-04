@@ -1,0 +1,31 @@
+required:
+- amount
+- organization
+- applicant
+- $type
+allOf:
+# - $ref: '#/components/schemas/ApplicationRequest'
+- type: object
+  properties:
+    amount:
+      $ref: '#/components/schemas/Amount'
+    promoCode:
+      $ref: '#/components/schemas/PromoCode'
+    term:
+      $ref: '#/components/schemas/LoanTerm'
+    purposeOfLoan:
+      $ref: '#/components/schemas/PurposeOfLoan'
+    organization:
+      $ref: '#/components/schemas/FullApplicationOrganization'
+    applicant:
+      $ref: '#/components/schemas/FullApplicationApplicant'
+    files:
+      $ref: '#/components/schemas/UploadBase64Files'
+    politicallyExposedPersons:
+      type: array
+      items:
+        $ref: '#/components/schemas/ApplicationPoliticallyExposedPerson'
+    $type:
+      type: string
+      example: full
+      description: Note that `$type` must be `full` in order to send in further information.

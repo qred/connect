@@ -1,0 +1,17 @@
+properties:
+  nationalIdentificationNumber:
+    $ref: '#/components/schemas/NationalIdentificationNumber'
+  givenName:
+    $ref: '#/components/schemas/GivenName'
+  additionalName:
+    $ref: '#/components/schemas/AdditionalName'
+  familyName:
+    $ref: '#/components/schemas/FamilyName'
+  dateOfBirth:
+    $ref: '#/components/schemas/DateOfBirth'
+  placeOfBirth:
+    $ref: '#/components/schemas/PlaceOfBirth'
+  description:
+    type: string
+    example: Member of the parliament
+    description: How is the person politically exposed.

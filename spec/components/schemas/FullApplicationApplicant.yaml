@@ -1,0 +1,16 @@
+allOf:
+  - $ref: '#/components/schemas/ApplicationApplicant'
+  - type: object
+    required:
+    - $type
+    properties:
+      politicallyExposedPerson:
+        $ref: '#/components/schemas/PoliticallyExposedPerson'
+      dateOfBirth:
+        $ref: '#/components/schemas/DateOfBirth'
+      placeOfBirth:
+        $ref: '#/components/schemas/PlaceOfBirth'
+      $type:
+        type: string
+        example: full
+        description: Note that `$type` must be `full` in order to send in further information.

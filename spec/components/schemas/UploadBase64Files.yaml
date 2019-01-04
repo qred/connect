@@ -1,0 +1,4 @@
+type: array
+items:
+  $ref: '#/components/schemas/UploadBase64File'
+description: Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer.

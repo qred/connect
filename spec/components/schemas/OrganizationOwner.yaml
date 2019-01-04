@@ -1,0 +1,17 @@
+properties:
+  nationalIdentificationNumber:
+    $ref: '#/components/schemas/NationalIdentificationNumber'
+  givenName:
+    $ref: '#/components/schemas/GivenName'
+  additionalName:
+    $ref: '#/components/schemas/AdditionalName'
+  familyName:
+    $ref: '#/components/schemas/FamilyName'
+  ownerShipPercent:
+    type: number
+    example: 75
+    description: Ownership in percent.
+  dateOfBirth:
+    $ref: '#/components/schemas/DateOfBirth'
+  placeOfBirth:
+    $ref: '#/components/schemas/PlaceOfBirth'

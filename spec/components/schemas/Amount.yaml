@@ -1,0 +1,14 @@
+type: number
+example: 15000.00
+description: >-
+  ### Amount
+
+  The amount in local currency that the company wants to borrow. 
+  
+  ### Abbreviation
+
+  Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
+
+  ### Currency code of amount?
+
+  Note that the currency is specified when issued API key.

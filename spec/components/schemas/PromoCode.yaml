@@ -1,0 +1,4 @@
+type: string
+example: SOMECAMPAIGN123
+description: >-
+  Promo code used to give the customer a discount or extra benefits.
