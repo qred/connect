@@ -1,0 +1,6 @@
+description: |
+  When you sign up for an account, you are given your first API client id and secret API key. Using these you can then
+  connect to our identity provider to get a [JWT](https://jwt.io) issued.
+type: http
+scheme: bearer
+bearerFormat: JWT

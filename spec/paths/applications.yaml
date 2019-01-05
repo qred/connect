@@ -39,4 +39,4 @@ post:
           schema:
             $ref: '#/components/schemas/ApplicationErrorResponse'
   security:
-    - api_key: []
+    - JWT: []

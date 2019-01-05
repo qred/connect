@@ -1,5 +1,0 @@
-description: |
-  When you sign up for an account, you are given your first secret API key.
-type: apiKey
-in: header
-name: api_key

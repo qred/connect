@@ -33,5 +33,5 @@ get:
     404:
       description: Application not found
   security:
-    - api_key: []
+    - JWT: []
  
