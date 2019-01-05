@@ -202,7 +202,7 @@ namespace AwesomeBusinessApp
 
       // call api
       var client = new HttpClient();
-      client.DefaultRequestHeaders.Add("api_key", tokenResponse.AccessToken);
+      client.SetBearerToken(tokenResponse.AccessToken);
       var payload = new ApplicationRequest
       {
         Amount = 5000,
