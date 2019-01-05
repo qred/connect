@@ -210,7 +210,7 @@ namespace AwesomeBusinessApp
         Applicant = new ApplicationApplicant { Email = "joe.smith@a-company.com", Phone = "+4688675309", NationalIdentificationNumber = "2344473928" }
       };
       Console.WriteLine(payload.ToJson());
-      var response = await client.PostAsync("http://api.qred.com/loans/v1/applications", new StringContent(payload.ToJson(), Encoding.UTF8, "application/json"));
+      var response = await client.PostAsync("https://api.qred.com/loans/v1/applications", new StringContent(payload.ToJson(), Encoding.UTF8, "application/json"));
       if (!response.IsSuccessStatusCode)
       {
         Console.WriteLine(response.StatusCode);
