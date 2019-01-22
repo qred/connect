@@ -47,6 +47,22 @@ get:
   operationId: getAll
   description: >-
     Get all loan applications
+  parameters:
+    - name: page
+      in: query
+      description: Page
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+    - name: perPage
+      in: query
+      description: Items per page
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 150
   responses:
     200:
       description: item created
