@@ -11,6 +11,7 @@ get:
     required: true
     schema: 
       type: string
+      pattern: "ap_[^/]+"
   responses:
     200:
       description: Found application with id
