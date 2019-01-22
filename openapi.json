@@ -211,12 +211,12 @@
         "properties": {
           "id": {
             "type": "string",
-            "example": "APP-32444"
+            "example": "ap_0462a90c-fd56-4820-b8d4-28f252629c2c"
           },
           "url": {
             "type": "string",
             "format": "uri",
-            "example": "https://api.qred.com/loans/v1/applications/APP-32444"
+            "example": "https://api.qred.com/loans/v1/applications/ap_0462a90c-fd56-4820-b8d4-28f252629c2c"
           }
         }
       },
