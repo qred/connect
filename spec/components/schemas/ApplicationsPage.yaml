@@ -1,0 +1,13 @@
+properties:
+  total:
+    type: integer
+  perPage:
+    type: integer
+  pages:
+    type: integer
+  page:
+    type: integer
+  items:
+    type: array
+    items:
+      $ref: '#/components/schemas/ApplicationPageItem'

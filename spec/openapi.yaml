@@ -49,3 +49,5 @@ info:
 tags:
 - name: applications
   description: Create loan applications on behalf of your customers
+- name: admin
+  description: Administrative API's used internally

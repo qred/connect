@@ -1,0 +1,25 @@
+get:
+  summary: Loan application source
+  operationId: getSource
+  description: Get loan application source from Qred
+  tags:
+    - admin
+  parameters:
+  - name: applicationId
+    in: path
+    description: The id of the application
+    required: true
+    schema: 
+      type: string
+  responses:
+    200:
+      description: Found application with id
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplicationSource'
+    404:
+      description: Application not found
+  security:
+    - JWT: []
+ 

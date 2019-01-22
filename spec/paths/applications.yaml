@@ -40,3 +40,25 @@ post:
             $ref: '#/components/schemas/ApplicationErrorResponse'
   security:
     - JWT: []
+get:
+  tags:
+  - admin
+  summary: Get loan applications
+  operationId: getAll
+  description: >-
+    Get all loan applications
+  responses:
+    200:
+      description: item created
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplicationsPage'
+    400:
+      description: invalid input, object invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApplicationErrorResponse'
+  security:
+    - JWT: []

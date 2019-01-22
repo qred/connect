@@ -1,0 +1,11 @@
+properties:
+  request:
+    oneOf:
+      - $ref: '#/components/schemas/ApplicationRequest'
+      - $ref: '#/components/schemas/FullApplicationRequest'
+    discriminator:
+      propertyName: $type
+      mapping:
+        simple: '#/components/schemas/ApplicationRequest'
+        full: '#/components/schemas/FullApplicationRequest'              
+
