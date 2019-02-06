@@ -3,3 +3,7 @@ required:
 properties:
   decision:
     $ref: '#/components/schemas/ApplicationDecisionType'
+  userPage:
+    type: string
+    format: uri
+    example: https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c
