@@ -115,7 +115,8 @@
             "description": "The id of the application",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "pattern": "ap_[^/]+"
             }
           }
         ],
@@ -217,6 +218,11 @@
             "type": "string",
             "format": "uri",
             "example": "https://api.qred.com/loans/v1/applications/ap_0462a90c-fd56-4820-b8d4-28f252629c2c"
+          },
+          "userPage": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
           }
         }
       },
@@ -227,6 +233,11 @@
         "properties": {
           "decision": {
             "$ref": "#/components/schemas/ApplicationDecisionType"
+          },
+          "userPage": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
           }
         }
       },
