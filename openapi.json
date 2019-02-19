@@ -175,39 +175,6 @@
         "example": 15000,
         "description": "### Amount\nThe amount in local currency that the company wants to borrow. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Currency code of amount?\nNote that the currency is specified when issued API key."
       },
-      "ApplicationApplicant": {
-        "required": [
-          "email",
-          "$type"
-        ],
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "joe.smith@a-company.com"
-          },
-          "phone": {
-            "$ref": "#/components/schemas/PhoneNumber"
-          },
-          "nationalIdentificationNumber": {
-            "$ref": "#/components/schemas/NationalIdentificationNumber"
-          },
-          "givenName": {
-            "$ref": "#/components/schemas/GivenName"
-          },
-          "additionalName": {
-            "$ref": "#/components/schemas/AdditionalName"
-          },
-          "familyName": {
-            "$ref": "#/components/schemas/FamilyName"
-          },
-          "$type": {
-            "type": "string",
-            "example": "simple",
-            "description": "Note that `$type` must be `full` in order to send in further information."
-          }
-        }
-      },
       "ApplicationCreateResponse": {
         "properties": {
           "id": {
@@ -271,7 +238,8 @@
           "amount": 5000,
           "term": 12,
           "campaign": "Spring Campaign",
-          "offerUrl": "https://qred.com/link-to-offer?id=offer-id"
+          "offerUrl": "https://qred.com/link-to-offer?id=offer-id",
+          "userPage": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
         }
       },
       "ApplicationDecisionManualProcess": {
@@ -281,7 +249,8 @@
           }
         ],
         "example": {
-          "type": "ManualProcess"
+          "type": "ManualProcess",
+          "userPage": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
         }
       },
       "ApplicationDecisionRejected": {
@@ -300,7 +269,8 @@
         ],
         "example": {
           "type": "Denied",
-          "rejectReason": "Due to previous problems with payments we regret that we have to reject the application."
+          "rejectReason": "Due to previous problems with payments we regret that we have to reject the application.",
+          "userPage": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
         }
       },
       "ApplicationDecisionType": {
@@ -351,39 +321,6 @@
           }
         }
       },
-      "ApplicationOrganization": {
-        "required": [
-          "nationalOrganizationNumber",
-          "$type"
-        ],
-        "properties": {
-          "nationalOrganizationNumber": {
-            "type": "string",
-            "example": "2344473928",
-            "description": "The national organization number is the \"number\" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In the Netherlands it is [KVK number](https://www.kvk.nl/english/)\n### Why not VAT ID?\nNote that a company can in some cases have many VAT numbers. \n### What about DUNS, LEI codes, et.c. ?\nWe only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).\n"
-          },
-          "email": {
-            "type": "string",
-            "format": "email",
-            "example": "invoice@a-company.com",
-            "description": "Company email"
-          },
-          "phone": {
-            "$ref": "#/components/schemas/PhoneNumber"
-          },
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "example": "http://www.a-company.com",
-            "description": "Url to the organization site."
-          },
-          "$type": {
-            "type": "string",
-            "example": "simple",
-            "description": "Note that `$type` must be `full` in order to send in further information."
-          }
-        }
-      },
       "ApplicationPoliticallyExposedPerson": {
         "properties": {
           "nationalIdentificationNumber": {
@@ -431,13 +368,13 @@
             "$ref": "#/components/schemas/PurposeOfLoan"
           },
           "organization": {
-            "$ref": "#/components/schemas/ApplicationOrganization"
+            "$ref": "#/components/schemas/SimpleOrganization"
           },
           "applicant": {
-            "$ref": "#/components/schemas/ApplicationApplicant"
+            "$ref": "#/components/schemas/SimpleApplicant"
           },
           "files": {
-            "$ref": "#/components/schemas/UploadBase64Files"
+            "$ref": "#/components/schemas/Base64Files"
           },
           "$type": {
             "type": "string",
@@ -445,6 +382,42 @@
             "description": "Note that `$type` must be `full` in order to send in further information."
           }
         }
+      },
+      "Base64File": {
+        "required": [
+          "filename",
+          "base64Content"
+        ],
+        "properties": {
+          "encodingFormat": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "application/xml",
+              "https//api.a-company.com/transactions/v1"
+            ],
+            "description": "Media type typically expressed using a MIME format (see [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml) site and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.).\nUnregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. In the case of organization specific file format with a specific purpose that could be a url to schema definition. For instance, transaction data format defined by `a-company` (see the example) that may or may not be hosted at that url."
+          },
+          "filename": {
+            "type": "string",
+            "example": "company-specific-format.xml"
+          },
+          "base64Content": {
+            "type": "string",
+            "format": "byte",
+            "example": "U3dhZ2dlciByb2Nrcw==",
+            "description": "Base64 encoded binary content."
+          }
+        }
+      },
+      "Base64Files": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Base64File"
+        },
+        "description": "Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer."
       },
       "DateOfBirth": {
         "type": "string",
@@ -456,10 +429,10 @@
         "example": "Smith",
         "description": "Family name. In the U.S., the last name of an Person. This can be used along with givenName instead of the name property."
       },
-      "FullApplicationApplicant": {
+      "FullApplicant": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/ApplicationApplicant"
+            "$ref": "#/components/schemas/SimpleApplicant"
           },
           {
             "type": "object",
@@ -475,47 +448,6 @@
               },
               "placeOfBirth": {
                 "$ref": "#/components/schemas/PlaceOfBirth"
-              },
-              "$type": {
-                "type": "string",
-                "example": "full",
-                "description": "Note that `$type` must be `full` in order to send in further information."
-              }
-            }
-          }
-        ]
-      },
-      "FullApplicationOrganization": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/ApplicationOrganization"
-          },
-          {
-            "type": "object",
-            "required": [
-              "$type"
-            ],
-            "properties": {
-              "numberOfEmployees": {
-                "type": "number",
-                "example": 5,
-                "description": "Number of full time employees."
-              },
-              "currentMonthlyTurnover": {
-                "type": "string",
-                "example": 100000,
-                "description": "### Short\nTurnover for last month in national currency. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Turnover currency code?\nNote that the currency is specified when issued API key."
-              },
-              "owners": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/OrganizationOwner"
-                }
-              },
-              "iban": {
-                "type": "string",
-                "example": "DE89 3704 0044 0532 0130 00",
-                "description": "International Bank Account Number. The company bank account for receiving out payment. \n"
               },
               "$type": {
                 "type": "string",
@@ -550,19 +482,60 @@
                 "$ref": "#/components/schemas/PurposeOfLoan"
               },
               "organization": {
-                "$ref": "#/components/schemas/FullApplicationOrganization"
+                "$ref": "#/components/schemas/FullOrganization"
               },
               "applicant": {
-                "$ref": "#/components/schemas/FullApplicationApplicant"
+                "$ref": "#/components/schemas/FullApplicant"
               },
               "files": {
-                "$ref": "#/components/schemas/UploadBase64Files"
+                "$ref": "#/components/schemas/Base64Files"
               },
               "politicallyExposedPersons": {
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/ApplicationPoliticallyExposedPerson"
                 }
+              },
+              "$type": {
+                "type": "string",
+                "example": "full",
+                "description": "Note that `$type` must be `full` in order to send in further information."
+              }
+            }
+          }
+        ]
+      },
+      "FullOrganization": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SimpleOrganization"
+          },
+          {
+            "type": "object",
+            "required": [
+              "$type"
+            ],
+            "properties": {
+              "numberOfEmployees": {
+                "type": "number",
+                "example": 5,
+                "description": "Number of full time employees."
+              },
+              "currentMonthlyTurnover": {
+                "type": "string",
+                "example": 100000,
+                "description": "### Short\nTurnover for last month in national currency. \n### Abbreviation\nExpected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.\n### Turnover currency code?\nNote that the currency is specified when issued API key."
+              },
+              "owners": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/OrganizationOwner"
+                }
+              },
+              "iban": {
+                "type": "string",
+                "example": "DE89 3704 0044 0532 0130 00",
+                "description": "International Bank Account Number. The company bank account for receiving out payment. \n"
               },
               "$type": {
                 "type": "string",
@@ -640,41 +613,71 @@
         "example": "I need to increase liquidity due to upcoming costs associated with participation in branch conference",
         "description": "Company explains why they need the business loan"
       },
-      "UploadBase64File": {
+      "SimpleApplicant": {
         "required": [
-          "filename",
-          "base64Content"
+          "email",
+          "$type"
         ],
         "properties": {
-          "encodingFormat": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "application/xml",
-              "https//api.a-company.com/transactions/v1"
-            ],
-            "description": "Media type typically expressed using a MIME format (see [IANA](http://www.iana.org/assignments/media-types/media-types.xhtml) site and [MDN reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types)) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.).\nUnregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. In the case of organization specific file format with a specific purpose that could be a url to schema definition. For instance, transaction data format defined by `a-company` (see the example) that may or may not be hosted at that url."
-          },
-          "filename": {
+          "email": {
             "type": "string",
-            "example": "company-specific-format.xml"
+            "format": "email",
+            "example": "joe.smith@a-company.com"
           },
-          "base64Content": {
+          "phone": {
+            "$ref": "#/components/schemas/PhoneNumber"
+          },
+          "nationalIdentificationNumber": {
+            "$ref": "#/components/schemas/NationalIdentificationNumber"
+          },
+          "givenName": {
+            "$ref": "#/components/schemas/GivenName"
+          },
+          "additionalName": {
+            "$ref": "#/components/schemas/AdditionalName"
+          },
+          "familyName": {
+            "$ref": "#/components/schemas/FamilyName"
+          },
+          "$type": {
             "type": "string",
-            "format": "byte",
-            "example": "U3dhZ2dlciByb2Nrcw==",
-            "description": "Base64 encoded binary content."
+            "example": "simple",
+            "description": "Note that `$type` must be `full` in order to send in further information."
           }
         }
       },
-      "UploadBase64Files": {
-        "type": "array",
-        "items": {
-          "$ref": "#/components/schemas/UploadBase64File"
-        },
-        "description": "Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer."
+      "SimpleOrganization": {
+        "required": [
+          "nationalOrganizationNumber",
+          "$type"
+        ],
+        "properties": {
+          "nationalOrganizationNumber": {
+            "type": "string",
+            "example": "2344473928",
+            "description": "The national organization number is the \"number\" used to identify organizations in a country. In Sweden that would be [organization number](https://bolagsverket.se/en). In Denmark you have [CVR-number](https://datacvr.virk.dk/data/?language=en-gb). In Finland it is the [Business ID](https://www.ytj.fi/en/index/businessid.html). In the Netherlands it is [KVK number](https://www.kvk.nl/english/)\n### Why not VAT ID?\nNote that a company can in some cases have many VAT numbers. \n### What about DUNS, LEI codes, et.c. ?\nWe only expect the national organization number, not the more international numbers (since not all companies in a country has an international id).\n"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "invoice@a-company.com",
+            "description": "Company email"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/PhoneNumber"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "http://www.a-company.com",
+            "description": "Url to the organization site."
+          },
+          "$type": {
+            "type": "string",
+            "example": "simple",
+            "description": "Note that `$type` must be `full` in order to send in further information."
+          }
+        }
       }
     },
     "securitySchemes": {
