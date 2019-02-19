@@ -12,11 +12,11 @@ properties:
   purposeOfLoan:
     $ref: '#/components/schemas/PurposeOfLoan'
   organization:
-    $ref: '#/components/schemas/ApplicationOrganization'
+    $ref: '#/components/schemas/SimpleOrganization'
   applicant:
-    $ref: '#/components/schemas/ApplicationApplicant'
+    $ref: '#/components/schemas/SimpleApplicant'
   files:
-    $ref: '#/components/schemas/UploadBase64Files'
+    $ref: '#/components/schemas/Base64Files'
   $type:
     type: string
     example: simple

@@ -16,11 +16,11 @@ allOf:
     purposeOfLoan:
       $ref: '#/components/schemas/PurposeOfLoan'
     organization:
-      $ref: '#/components/schemas/FullApplicationOrganization'
+      $ref: '#/components/schemas/FullOrganization'
     applicant:
-      $ref: '#/components/schemas/FullApplicationApplicant'
+      $ref: '#/components/schemas/FullApplicant'
     files:
-      $ref: '#/components/schemas/UploadBase64Files'
+      $ref: '#/components/schemas/Base64Files'
     politicallyExposedPersons:
       type: array
       items:

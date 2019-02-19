@@ -2,11 +2,11 @@
   "name": "qred-connect-api",
   "version": "1.0.0",
   "dependencies": {
-    "swagger-repo": "^2.0.0-rc.8"
+    "swagger-repo": "^2.0.0-rc.11"
   },
   "private": true,
   "scripts": {
-    "start": "swagger-repo serve",
+    "start": "swagger-repo serve --port 8282",
     "build": "swagger-repo build -o web_deploy",
     "test": "swagger-repo validate",
     "gh-pages": "swagger-repo build -o web_deploy && swagger-repo gh-pages"
