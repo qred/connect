@@ -1,6 +1,8 @@
+using System;
+
 namespace Qred.Connect
 {
-  public class ApplicationOrganization
+    public class ApplicationOrganization
     {
         public string NationalOrganizationNumber { get; set; }
 
@@ -8,6 +10,6 @@ namespace Qred.Connect
 
         public string Phone { get; set; }
 
-        public string Url { get; set; }
+        public Uri Url { get; set; }
     }
 }

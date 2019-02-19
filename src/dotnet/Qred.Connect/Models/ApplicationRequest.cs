@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace Qred.Connect
 {
-  public class ApplicationRequest
+    public class ApplicationRequest
     {
         public decimal? Amount { get; set; }
 
@@ -18,7 +18,7 @@ namespace Qred.Connect
 
         public ApplicationApplicant Applicant { get; set; }
 
-        public List<UploadBase64File> Files { get; set; }
+        public List<Base64File> Files { get; set; }
 
         /// <summary>
         /// Get the JSON string presentation of the application request

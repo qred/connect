@@ -1,6 +1,6 @@
 namespace Qred.Connect
 {
-  public class ApplicationApplicant
+    public class ApplicationApplicant
     {
         public string Email { get; set; }
 

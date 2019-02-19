@@ -5,8 +5,7 @@ using System.Linq;
 
 namespace Qred.Connect
 {
-
-  public class TypeNameSerializationBinder : ISerializationBinder
+    public class TypeNameSerializationBinder : ISerializationBinder
     {
         public TypeNameSerializationBinder()
         {

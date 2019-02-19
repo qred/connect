@@ -15,6 +15,5 @@
         public string DateOfBirth { get; set; }
 
         public string PlaceOfBirth { get; set; }
-
     }
 }
