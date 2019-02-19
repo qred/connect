@@ -4,9 +4,9 @@ namespace Qred.Connect
 {
     public partial class FullApplicationRequest : ApplicationRequest
     { 
-        public new FullApplicationOrganization Organization { get => (FullApplicationOrganization)base.Organization; set => base.Organization = value; }
-        public new FullApplicationApplicant Applicant { get => (FullApplicationApplicant)base.Applicant; set => base.Applicant = value; }
+        public new FullOrganization Organization { get => (FullOrganization)base.Organization; set => base.Organization = value; }
+        public new FullApplicant Applicant { get => (FullApplicant)base.Applicant; set => base.Applicant = value; }
 
-        public List<ApplicationPoliticallyExposedPerson> PoliticallyExposedPersons { get; set; }
+        public List<PoliticallyExposedPerson> PoliticallyExposedPersons { get; set; }
     }
 }

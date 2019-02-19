@@ -2,7 +2,7 @@ using System;
 
 namespace Qred.Connect
 {
-    public class ApplicationOrganization
+    public class SimpleOrganization
     {
         public string NationalOrganizationNumber { get; set; }
 

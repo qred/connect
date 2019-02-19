@@ -12,11 +12,11 @@ namespace Qred.Connect
             var typeNames = new Dictionary<Type, string>
             {
                 { typeof(ApplicationRequest),"simple" },
-                { typeof(ApplicationApplicant),"simple" },
-                { typeof(ApplicationOrganization),"simple" },
+                { typeof(SimpleApplicant),"simple" },
+                { typeof(SimpleOrganization),"simple" },
                 { typeof(FullApplicationRequest),"full" },
-                { typeof(FullApplicationApplicant),"full" },
-                { typeof(FullApplicationOrganization),"full" },
+                { typeof(FullApplicant),"full" },
+                { typeof(FullOrganization),"full" },
             };
             foreach (var typeName in typeNames)
             {

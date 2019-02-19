@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Qred.Connect
 {
-    public class FullApplicationOrganization:ApplicationOrganization 
+    public class FullOrganization:SimpleOrganization 
     { 
         public int? NumberOfEmployees { get; set; }
 

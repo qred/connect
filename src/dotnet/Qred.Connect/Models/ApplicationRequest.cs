@@ -14,9 +14,9 @@ namespace Qred.Connect
 
         public string PurposeOfLoan { get; set; }
 
-        public ApplicationOrganization Organization { get; set; }
+        public SimpleOrganization Organization { get; set; }
 
-        public ApplicationApplicant Applicant { get; set; }
+        public SimpleApplicant Applicant { get; set; }
 
         public List<Base64File> Files { get; set; }
 

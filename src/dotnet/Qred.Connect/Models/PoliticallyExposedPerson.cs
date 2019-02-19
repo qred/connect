@@ -1,6 +1,6 @@
 namespace Qred.Connect
 {
-    public class ApplicationPoliticallyExposedPerson
+    public class PoliticallyExposedPerson
     {
         public string NationalIdentificationNumber { get; set; }
 

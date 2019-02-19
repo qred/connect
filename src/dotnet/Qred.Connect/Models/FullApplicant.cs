@@ -3,7 +3,7 @@ namespace Qred.Connect
     /// <summary>
     /// 
     /// </summary>
-    public partial class FullApplicationApplicant : ApplicationApplicant
+    public partial class FullApplicant : SimpleApplicant
     { 
         public bool? PoliticallyExposedPerson { get; set; }
 
