@@ -1,5 +1,5 @@
 allOf:
-  - $ref: '#/components/schemas/ApplicationApplicant'
+  - $ref: '#/components/schemas/SimpleApplicant'
   - type: object
     required:
     - $type
