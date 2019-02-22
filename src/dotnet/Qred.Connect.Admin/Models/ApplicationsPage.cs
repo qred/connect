@@ -32,8 +32,4 @@ namespace Qred.Connect.Admin
         /// </summary>
         public List<ApplicationPageItem> Items { get; set; }
     }
-    public class ApplicationSource
-    {
-
-    }
 }
