@@ -5,6 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Qred.Connect\Qred.Connect.csproj" />
+    
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Qred.Connect" Version="0.2.1" />
   </ItemGroup>
 </Project>
