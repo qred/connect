@@ -16,7 +16,7 @@ namespace Qred.Connect.Admin
     /// </summary>
     public SimpleApplicant Applicant { get; set; }
     public string PurposeOfLoan { get; set; }
-    public decimal Amount { get; set; }
-    public int Term { get; set; }
+    public decimal? Amount { get; set; }
+    public int? Term { get; set; }
   }
 }
