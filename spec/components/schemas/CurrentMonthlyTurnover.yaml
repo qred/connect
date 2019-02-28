@@ -1,0 +1,23 @@
+type: object
+example: 100000
+description: >-
+  ### Short
+
+  Turnover for last month in national currency. 
+  
+  ### Abbreviation
+
+  Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
+
+  ### Other formats
+
+  You can also send in the turnover as a range. Say that you know that the turnover is in the span 
+  50 000-100 000, then you can serialize that value as 
+  `[50000,100000]`.
+
+  If you know that the turnover is above a certain value, say 1 000 000, then that can be serialized as
+  `[1000000,null]`
+
+  ### Turnover currency code?
+
+  Note that the currency is specified when issued API key.
