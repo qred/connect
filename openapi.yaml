@@ -26,7 +26,7 @@ info:
     To get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)
     ## Terms of Service
     The terms of service will be clarified once you have a partner agreement with Qred.
-  version: 0.2.0
+  version: 0.3.0
   title: Qred Connect
   termsOfService: '#section/Terms-of-Service'
   contact:
@@ -409,6 +409,19 @@ components:
       items:
         $ref: '#/components/schemas/Base64File'
       description: 'Here you can supply additional files such as images, pdfs or company specify formats in order to get a faster qualification for your customer.'
+    CurrentMonthlyTurnover:
+      type: object
+      example: 100000
+      description: |-
+        ### Short
+        Turnover for last month in national currency. 
+        ### Abbreviation
+        Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
+        ### Other formats
+        You can also send in the turnover as a range. Say that you know that the turnover is in the span  50 000-100 000, then you can serialize that value as  `[50000,100000]`.
+        If you know that the turnover is above a certain value, say 1 000 000, then that can be serialized as `[1000000,null]`
+        ### Turnover currency code?
+        Note that the currency is specified when issued API key.
     DateOfBirth:
       type: string
       example: '19701201'
@@ -473,19 +486,7 @@ components:
             - $type
           properties:
             numberOfEmployees:
-              type: number
-              example: 5
-              description: Number of full time employees.
-            currentMonthlyTurnover:
-              type: string
-              example: 100000
-              description: |-
-                ### Short
-                Turnover for last month in national currency. 
-                ### Abbreviation
-                Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
-                ### Turnover currency code?
-                Note that the currency is specified when issued API key.
+              $ref: '#/components/schemas/NumberOfEmployees'
             owners:
               type: array
               items:
@@ -516,6 +517,15 @@ components:
         ### In the EU
         Some EU countries have a TIN. Some EU countries do not have a unique identification number. In that case the identification number will be some other type of information that can help identify the person.  
         The European commission has further information about [TIN](https://ec.europa.eu/taxation_customs/business/tax-cooperation-control/administrative-cooperation/tax-identification-numbers-tin_en).
+    NumberOfEmployees:
+      type: object
+      example: 10
+      description: |-
+        ### Short
+        Number of full time employees.  
+        ### Other formats
+        You can also send in the number of employees as a range.  For instance if the company has between 1 and 10 employees, then that can be serialized as  `[1,10]`.
+        If you know that the number of employees is greater than a certain value, say 250, then that can be serialized as `[250,null]`
     OrganizationOwner:
       properties:
         nationalIdentificationNumber:
@@ -547,6 +557,10 @@ components:
       type: boolean
       example: false
       description: '"politically exposed person" (PEP) is a term describing someone who has been entrusted with a prominent public function. A PEP generally presents a higher risk for potential involvement in bribery and corruption by virtue of their position and the influence that they may hold.'
+    PrivacyPolicyAccepted:
+      type: boolean
+      example: false
+      description: True when the applicant has accepted Qred privacy policy.
     PromoCode:
       type: string
       example: SOMECAMPAIGN123
@@ -574,6 +588,8 @@ components:
           $ref: '#/components/schemas/AdditionalName'
         familyName:
           $ref: '#/components/schemas/FamilyName'
+        privacyPolicyAccepted:
+          $ref: '#/components/schemas/PrivacyPolicyAccepted'
         $type:
           type: string
           example: simple
@@ -604,6 +620,8 @@ components:
           format: uri
           example: 'http://www.a-company.com'
           description: Url to the organization site.
+        currentMonthlyTurnover:
+          $ref: '#/components/schemas/CurrentMonthlyTurnover'
         $type:
           type: string
           example: simple
