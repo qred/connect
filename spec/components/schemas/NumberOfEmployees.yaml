@@ -1,0 +1,16 @@
+type: object
+example: 10
+description: >-
+  ### Short
+
+  Number of full time employees.  
+  
+  ### Other formats
+
+  You can also send in the number of employees as a range. 
+  For instance if the company has between 1 and 10 employees, then that can be
+  serialized as 
+  `[1,10]`.
+
+  If you know that the number of employees is greater than a certain value, say 250, then that can be serialized as
+  `[250,null]`

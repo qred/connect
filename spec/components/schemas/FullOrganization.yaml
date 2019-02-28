@@ -5,24 +5,7 @@ allOf:
     - $type
     properties:
       numberOfEmployees:
-        type: number
-        example: 5
-        description: Number of full time employees.
-      currentMonthlyTurnover:
-        type: string
-        example: 100000
-        description: >-
-          ### Short
-
-          Turnover for last month in national currency. 
-          
-          ### Abbreviation
-
-          Expected to be the full amount, i.e. 1 000 implies 1 thousand in the local currency.
-
-          ### Turnover currency code?
-
-          Note that the currency is specified when issued API key.
+        $ref: '#/components/schemas/NumberOfEmployees'
       owners:
         type: array
         items:

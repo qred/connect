@@ -16,6 +16,8 @@ properties:
     $ref: '#/components/schemas/AdditionalName'
   familyName:
     $ref: '#/components/schemas/FamilyName'
+  privacyPolicyAccepted:
+    $ref: '#/components/schemas/PrivacyPolicyAccepted'
   $type:
     type: string
     example: simple
