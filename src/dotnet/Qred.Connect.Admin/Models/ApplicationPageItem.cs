@@ -18,5 +18,6 @@ namespace Qred.Connect.Admin
     public string PurposeOfLoan { get; set; }
     public decimal? Amount { get; set; }
     public int? Term { get; set; }
+    public DateTime DateTime {get;set;}
   }
 }
