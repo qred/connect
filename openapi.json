@@ -179,17 +179,20 @@
         "properties": {
           "id": {
             "type": "string",
-            "example": "ap_0462a90c-fd56-4820-b8d4-28f252629c2c"
+            "example": "ap_0462a90c-fd56-4820-b8d4-28f252629c2c",
+            "description": "The application id"
           },
           "url": {
             "type": "string",
             "format": "uri",
-            "example": "https://api.qred.com/loans/v1/applications/ap_0462a90c-fd56-4820-b8d4-28f252629c2c"
+            "example": "https://api.qred.com/loans/v1/applications/ap_0462a90c-fd56-4820-b8d4-28f252629c2c",
+            "description": "URL to the resource created by your POST request"
           },
           "userPage": {
             "type": "string",
             "format": "uri",
-            "example": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
+            "example": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c",
+            "description": "URL that you can direct the applicant in order for the applicant to be able to potentially fill in more information"
           }
         }
       },
@@ -204,7 +207,8 @@
           "userPage": {
             "type": "string",
             "format": "uri",
-            "example": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c"
+            "example": "https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c",
+            "description": "URL that you can direct the applicant in order for the applicant to be able to potentially fill in more information"
           }
         }
       },
@@ -296,15 +300,18 @@
           "errors": [
             {
               "property": "amount",
-              "description": "Amount is a required field"
+              "description": "Amount is a required field",
+              "code": "NotNull"
             },
             {
               "property": "organization.organizationId",
-              "description": "organizationId is a required field"
+              "description": "organizationId is a required field",
+              "code": "NotNull"
             },
             {
               "property": "applicant.email",
-              "description": "email is a required field"
+              "description": "email is a required field",
+              "code": "NotNull"
             }
           ]
         }
@@ -318,6 +325,22 @@
           "description": {
             "type": "string",
             "example": "Amount is a required field"
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "Min",
+              "Max",
+              "PhoneNumber",
+              "NationalIdentificationNumber",
+              "NotNull",
+              "NotEmpty",
+              "Email",
+              "Url",
+              "CantUpdateApplication",
+              "General"
+            ],
+            "description": "A constant that can be used in order to identify the error programmatically. Can be used when translating.\nShort description:\n  * `Min` - Failed validation due to value being below the minimum required value\n  * `Max` - Failed validation due to value being above the maximum required value\n  * `PhoneNumber` - Failed validation due to value not being a valid phone number\n  * `NationalIdentificationNumber` - Failed validation due to value not being a valid national identification for your country\n  * `NotNull` - Failed validation due to value being null, when a non null value is required\n  * `NotEmpty` - Failed validation due to value being empty while a non empty string is required\n  * `Email` - Failed validation due to value not being an email\n  * `Url` - Failed validation due to value not being URL\n  * `CantUpdateApplication` - Failed to update application due to state of application\n  * `General` - General code.\n"
           }
         }
       },
