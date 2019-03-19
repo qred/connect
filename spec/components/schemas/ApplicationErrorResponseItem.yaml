@@ -5,4 +5,20 @@ properties:
   description:
     type: string
     example: "Amount is a required field"
+  code:
+    type: string
+    enum: [Min, Max, PhoneNumber, NationalIdentificationNumber, NotNull, NotEmpty, Email, Url, CantUpdateApplication, General]
+    description: > 
+      A constant that can be used in order to identify the error programmatically. Can be used when translating.
 
+      Short description:
+        * `Min` - Failed validation due to value being below the minimum required value
+        * `Max` - Failed validation due to value being above the maximum required value
+        * `PhoneNumber` - Failed validation due to value not being a valid phone number
+        * `NationalIdentificationNumber` - Failed validation due to value not being a valid national identification for your country
+        * `NotNull` - Failed validation due to value being null, when a non null value is required
+        * `NotEmpty` - Failed validation due to value being empty while a non empty string is required
+        * `Email` - Failed validation due to value not being an email
+        * `Url` - Failed validation due to value not being URL
+        * `CantUpdateApplication` - Failed to update application due to state of application
+        * `General` - General code.

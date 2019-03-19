@@ -7,3 +7,4 @@ properties:
     type: string
     format: uri
     example: https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c
+    description: URL that you can direct the applicant in order for the applicant to be able to potentially fill in more information

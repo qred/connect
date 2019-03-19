@@ -5,7 +5,7 @@ properties:
     items:
       $ref: '#/components/schemas/ApplicationErrorResponseItem'
 example:
-  { "errors":[{"property":"amount", "description": "Amount is a required field"},
-   {"property":"organization.organizationId", "description": "organizationId is a required field"},
-   {"property":"applicant.email", "description": "email is a required field"}
+  { "errors":[{"property":"amount", "description": "Amount is a required field", "code": "NotNull"},
+   {"property":"organization.organizationId", "description": "organizationId is a required field", "code": "NotNull"},
+   {"property":"applicant.email", "description": "email is a required field", "code": "NotNull"}
   ] }

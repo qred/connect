@@ -2,11 +2,14 @@ properties:
   id:
     type: string
     example: ap_0462a90c-fd56-4820-b8d4-28f252629c2c
+    description: The application id
   url:
     type: string
     format: uri
     example: https://api.qred.com/loans/v1/applications/ap_0462a90c-fd56-4820-b8d4-28f252629c2c
+    description: URL to the resource created by your POST request
   userPage:
     type: string
     format: uri
     example: https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c
+    description: URL that you can direct the applicant in order for the applicant to be able to potentially fill in more information
