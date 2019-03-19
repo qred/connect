@@ -12,7 +12,7 @@
   ],
   "info": {
     "description": "Qred Connect - API Documentation\n## Introduction\nQred's Partner API \"Qred Connect\" allows our partners to directly connect to Qred's services. As a partner you may submit an application and request instant approval for a business loan. Our API allows our partners to integrate Qred's business loan application in a seamless and effortless way.\n### Technical Specifications\nNotice that for Qred Connect:\n\n  * Qred's APIs are built according to industry standard practices for third-party RESTful web services\n  * Strong validation, authentication & encryption\n  * Entry points for requests are sent via HTTP over SSL (all information is encrypted)\n\n### How to get started\nThere are two environments - Test and Production.\n\n  * Sandbox: https://sandbox.qred.com\n  * Production: https://api.qred.com\n\n## Contact\nTo get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)\n## Terms of Service\nThe terms of service will be clarified once you have a partner agreement with Qred.\n",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "title": "Qred Connect",
     "termsOfService": "#section/Terms-of-Service",
     "contact": {
