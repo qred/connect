@@ -15,6 +15,10 @@
         margin: 0;
         padding: 0;
       }
+
+      .menu-content img {
+        margin: 16px 0;
+      }
     </style>
     
   </head>
@@ -24,7 +28,7 @@
     <script>
       Redoc.init(
         './openapi.json',
-        {"theme":{"colors":{"primary":{"main":"#32329f"}}}},
+        {"theme":{"colors":{"primary":{"main":"#050F09"}},"logo":{"maxWidth":"200px","marginTop":"24px"},"menu":{"backgroundColor":"#242C7A","textColor":"#ffffff"},"rightPanel":{"backgroundColor":"#ffffff"},"codeSample":{"backgroundColor":"#070812"},"typography":{"links":{"color":"#ffffff"}}}},
         document.getElementById("redoc_container")
       );
     </script>
