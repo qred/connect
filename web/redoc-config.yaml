@@ -1,4 +1,14 @@
 theme:
   colors:
     primary:
-      main: '#32329f'
+      main: '#42D984'
+  logo:
+    maxWidth: '200px'
+    marginTop: '24px'
+  menu:
+    backgroundColor: 'rgba(112,125,255,.7)'
+    textColor: '#ffffff'
+  rightPanel:
+    backgroundColor: '#ffffff'
+  codeSample:
+    backgroundColor: '#707DFF'
