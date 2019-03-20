@@ -14,4 +14,5 @@ theme:
     backgroundColor: '#070812'
   typography:
     links:
-      color: '#ffffff'
+      color: '#050F09'
+      hover: '4C5CFF'
