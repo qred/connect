@@ -26,7 +26,7 @@ info:
     To get in touch with Qred either send us an email at <partner@qred.com> or call us at [+46 8 474 46 62](tel:4684744662)
     ## Terms of Service
     The terms of service will be clarified once you have a partner agreement with Qred.
-  version: 0.4.0
+  version: 0.5.0
   title: Qred Connect
   termsOfService: '#section/Terms-of-Service'
   contact:
@@ -81,118 +81,7 @@ paths:
         - JWT: []
       x-code-samples:
         - lang: 'C#'
-          source: |+
-            /**
-            create a new .net project:
-
-            ```
-            dotnet new console -o ./
-            ```
-
-            add Identity Model package:
-
-            ``` 
-            dotnet add package IdentityModel 
-            dotnet add package Qred.Connect
-            ```
-
-            You should end up with something like:
-
-            ```
-            <Project Sdk="Microsoft.NET.Sdk">
-
-              <PropertyGroup>
-                <OutputType>Exe</OutputType>
-                <TargetFramework>netcoreapp2.2</TargetFramework>
-              </PropertyGroup>
-              <ItemGroup>
-                <PackageReference Include="IdentityModel" Version="3.10.4" />
-                <PackageReference Include="Qred.Connect" Version="0.2.0" />
-              </ItemGroup>
-
-            </Project>
-            ```
-
-            */
-            using System;
-            using System.Collections.Generic;
-            using System.Net.Http;
-            using System.Text;
-            using System.Threading.Tasks;
-            using IdentityModel.Client;
-            using Newtonsoft.Json;
-            using Newtonsoft.Json.Serialization;
-            using Qred.Connect;
-
-            namespace AwesomeBusinessApp
-            {
-              public class Program
-              {
-                public static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();
-
-                private static async Task MainAsync()
-                {
-                  // discover endpoints from metadata
-                  var disco = await new DiscoveryClient("https://identity.qred.com").GetAsync();
-                  if (disco.IsError)
-                  {
-                    Console.Error.WriteLine("Error {0}", disco.Error);
-                    Console.Error.WriteLine("ErrorType {0}", disco.ErrorType);
-                    Console.Error.WriteLine(String.Join(", ",
-                        "Exception",
-                        "Message " + disco.Exception?.Message,
-                        "Source " + disco.Exception?.Source,
-                        "StackTrace " + disco.Exception?.StackTrace));
-                    return;
-                  }
-
-                  // request token
-                  var tokenClient = new TokenClient(disco.TokenEndpoint, "YOUR CLIENT ID", "YOUR API KEY");
-                  var tokenResponse = await tokenClient.RequestClientCredentialsAsync("connect");
-
-                  if (tokenResponse.IsError)
-                  {
-                    Console.WriteLine(tokenResponse.Error);
-                    return;
-                  }
-
-                  Console.WriteLine(tokenResponse.Json);
-                  Console.WriteLine("\n\n");
-
-                  // call api
-                  var client = new HttpClient();
-                  client.SetBearerToken(tokenResponse.AccessToken);
-                  var payload = new ApplicationRequest
-                  {
-                    Amount = 5000,
-                    Organization = new SimpleOrganization { 
-                      Email = "admin@a-company.com", 
-                      NationalOrganizationNumber = "2344473928" 
-                    },
-                    Applicant = new SimpleApplicant { 
-                      Email = "joe.smith@a-company.com", 
-                      Phone = "+4688675309"
-                    }
-                  };
-                  Console.WriteLine(payload.ToJson());
-                  var response = await client.PostAsync("https://api.qred.com/loans/v1/applications", new StringContent(payload.ToJson(), Encoding.UTF8, "application/json"));
-                  if (!response.IsSuccessStatusCode)
-                  {
-                    Console.WriteLine(response.StatusCode);
-                    var content = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(content);
-                  }
-                  else
-                  {
-                    var content = await response.Content.ReadAsStringAsync();
-                    var applicationResponse = JsonConvert.DeserializeObject<ApplicationCreateResponse>(content);
-                    Console.WriteLine(applicationResponse);
-                  }
-                }
-              }
-            }
-
-
+          source: "/**\r\ncreate a new .net project:\r\n\r\n```\r\ndotnet new console -o ./\r\n```\r\n\r\nadd Identity Model package:\r\n\r\n``` \r\ndotnet add package IdentityModel \r\ndotnet add package Qred.Connect\r\n```\r\n\r\nYou should end up with something like:\r\n\r\n```\r\n<Project Sdk=\"Microsoft.NET.Sdk\">\r\n\r\n  <PropertyGroup>\r\n    <OutputType>Exe</OutputType>\r\n    <TargetFramework>netcoreapp2.2</TargetFramework>\r\n  </PropertyGroup>\r\n  <ItemGroup>\r\n    <PackageReference Include=\"IdentityModel\" Version=\"3.10.4\" />\r\n    <PackageReference Include=\"Qred.Connect\" Version=\"0.2.0\" />\r\n  </ItemGroup>\r\n\r\n</Project>\r\n```\r\n\r\n*/\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing System.Net.Http;\r\nusing System.Text;\r\nusing System.Threading.Tasks;\r\nusing IdentityModel.Client;\r\nusing Newtonsoft.Json;\r\nusing Newtonsoft.Json.Serialization;\r\nusing Qred.Connect;\r\n\r\nnamespace AwesomeBusinessApp\r\n{\r\n  public class Program\r\n  {\r\n    public static void Main(string[] args) => MainAsync().GetAwaiter().GetResult();\r\n\r\n    private static async Task MainAsync()\r\n    {\r\n      // discover endpoints from metadata\r\n      var disco = await new DiscoveryClient(\"https://identity.qred.com\").GetAsync();\r\n      if (disco.IsError)\r\n      {\r\n        Console.Error.WriteLine(\"Error {0}\", disco.Error);\r\n        Console.Error.WriteLine(\"ErrorType {0}\", disco.ErrorType);\r\n        Console.Error.WriteLine(String.Join(\", \",\r\n            \"Exception\",\r\n            \"Message \" + disco.Exception?.Message,\r\n            \"Source \" + disco.Exception?.Source,\r\n            \"StackTrace \" + disco.Exception?.StackTrace));\r\n        return;\r\n      }\r\n\r\n      // request token\r\n      var tokenClient = new TokenClient(disco.TokenEndpoint, \"YOUR CLIENT ID\", \"YOUR API KEY\");\r\n      var tokenResponse = await tokenClient.RequestClientCredentialsAsync(\"connect\");\r\n\r\n      if (tokenResponse.IsError)\r\n      {\r\n        Console.WriteLine(tokenResponse.Error);\r\n        return;\r\n      }\r\n\r\n      Console.WriteLine(tokenResponse.Json);\r\n      Console.WriteLine(\"\\n\\n\");\r\n\r\n      // call api\r\n      var client = new HttpClient();\r\n      client.SetBearerToken(tokenResponse.AccessToken);\r\n      var payload = new ApplicationRequest\r\n      {\r\n        Amount = 5000,\r\n        Organization = new SimpleOrganization { \r\n          Email = \"admin@a-company.com\", \r\n          NationalOrganizationNumber = \"2344473928\" \r\n        },\r\n        Applicant = new SimpleApplicant { \r\n          Email = \"joe.smith@a-company.com\", \r\n          Phone = \"+4688675309\"\r\n        }\r\n      };\r\n      Console.WriteLine(payload.ToJson());\r\n      var response = await client.PostAsync(\"https://api.qred.com/loans/v1/applications\", new StringContent(payload.ToJson(), Encoding.UTF8, \"application/json\"));\r\n      if (!response.IsSuccessStatusCode)\r\n      {\r\n        Console.WriteLine(response.StatusCode);\r\n        var content = await response.Content.ReadAsStringAsync();\r\n        Console.WriteLine(content);\r\n      }\r\n      else\r\n      {\r\n        var content = await response.Content.ReadAsStringAsync();\r\n        var applicationResponse = JsonConvert.DeserializeObject<ApplicationCreateResponse>(content);\r\n        Console.WriteLine(applicationResponse);\r\n      }\r\n    }\r\n  }\r\n}\r\n\r\n\r\n"
   '/applications/{applicationId}':
     get:
       summary: Status of loan application
@@ -207,20 +96,20 @@ paths:
           required: true
           schema:
             type: string
-            pattern: 'ap_[^/]+'
+            pattern: ' ap_[^/]+'
       responses:
         '200':
           description: Found application with id
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationDecisionApproved'
+                $ref: '#/components/schemas/ApplicationDecisionManualProcess'
         '210':
           description: Found application with id
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ApplicationDecisionManualProcess'
+                $ref: '#/components/schemas/ApplicationDecisionApproved'
         '211':
           description: Found application with id
           content:
@@ -265,15 +154,10 @@ components:
           description: URL that you can direct the applicant in order for the applicant to be able to potentially fill in more information
     ApplicationDecision:
       required:
-        - decision
+        - status
       properties:
-        decision:
+        status:
           $ref: '#/components/schemas/ApplicationDecisionType'
-        userPage:
-          type: string
-          format: uri
-          example: 'https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c'
-          description: URL that you can direct the applicant in order for the applicant to be able to potentially fill in more information
     ApplicationDecisionApproved:
       allOf:
         - $ref: '#/components/schemas/ApplicationDecision'
@@ -285,23 +169,16 @@ components:
               type: number
             campaign:
               type: string
-            offerUrl:
-              type: string
-              format: uri
-              description: Url for the user to see and accept the offer given by Qred
       example:
         type: Approved
         amount: 5000
         term: 12
         campaign: Spring Campaign
-        offerUrl: 'https://qred.com/link-to-offer?id=offer-id'
-        userPage: 'https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c'
     ApplicationDecisionManualProcess:
       allOf:
         - $ref: '#/components/schemas/ApplicationDecision'
       example:
         type: ManualProcess
-        userPage: 'https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c'
     ApplicationDecisionRejected:
       allOf:
         - $ref: '#/components/schemas/ApplicationDecision'
@@ -312,14 +189,16 @@ components:
       example:
         type: Denied
         rejectReason: Due to previous problems with payments we regret that we have to reject the application.
-        userPage: 'https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c'
     ApplicationDecisionType:
       type: string
       example: Approved
       enum:
         - Approved
-        - Denied
-        - ManualProcess
+        - Rejected
+        - Expired
+        - Waiting
+        - Cancelled
+        - Application Registered
     ApplicationErrorResponse:
       type: object
       properties:
