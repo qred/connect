@@ -170,7 +170,7 @@ components:
             campaign:
               type: string
       example:
-        type: Approved
+        status: Approved
         amount: 5000
         term: 12
         campaign: Spring Campaign
@@ -178,7 +178,7 @@ components:
       allOf:
         - $ref: '#/components/schemas/ApplicationDecision'
       example:
-        type: ManualProcess
+        status: ManualProcess
     ApplicationDecisionRejected:
       allOf:
         - $ref: '#/components/schemas/ApplicationDecision'
@@ -187,7 +187,7 @@ components:
             rejectReason:
               type: string
       example:
-        type: Denied
+        status: Denied
         rejectReason: Due to previous problems with payments we regret that we have to reject the application.
     ApplicationDecisionType:
       type: string

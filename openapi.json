@@ -227,7 +227,7 @@
           }
         ],
         "example": {
-          "type": "Approved",
+          "status": "Approved",
           "amount": 5000,
           "term": 12,
           "campaign": "Spring Campaign"
@@ -240,7 +240,7 @@
           }
         ],
         "example": {
-          "type": "ManualProcess"
+          "status": "ManualProcess"
         }
       },
       "ApplicationDecisionRejected": {
@@ -258,7 +258,7 @@
           }
         ],
         "example": {
-          "type": "Denied",
+          "status": "Denied",
           "rejectReason": "Due to previous problems with payments we regret that we have to reject the application."
         }
       },
