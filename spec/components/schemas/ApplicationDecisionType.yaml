@@ -2,5 +2,8 @@ type: string
 example: Approved
 enum:
   - Approved
-  - Denied
-  - ManualProcess
+  - Rejected
+  - Expired
+  - Waiting
+  - Cancelled
+  - Application Registered

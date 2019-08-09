@@ -7,4 +7,4 @@ allOf:
 example:
   type: Denied
   rejectReason: Due to previous problems with payments we regret that we have to reject the application.
-  userPage: https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c
+  

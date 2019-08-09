@@ -11,20 +11,20 @@ get:
     required: true
     schema: 
       type: string
-      pattern: "ap_[^/]+"
+      pattern: " ap_[^/]+"
   responses:
     200:
       description: Found application with id
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ApplicationDecisionApproved'
+            $ref: '#/components/schemas/ApplicationDecisionManualProcess'
     210:
       description: Found application with id
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ApplicationDecisionManualProcess'
+            $ref: '#/components/schemas/ApplicationDecisionManualApproved'
     211:
       description: Found application with id
       content:

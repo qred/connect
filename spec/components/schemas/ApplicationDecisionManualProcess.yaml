@@ -2,4 +2,3 @@ allOf:
   - $ref: '#/components/schemas/ApplicationDecision'
 example:
   type: ManualProcess
-  userPage: https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c

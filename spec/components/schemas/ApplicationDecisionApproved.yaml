@@ -8,14 +8,8 @@ allOf:
         type: number
       campaign:
         type: string
-      offerUrl:
-        type: string
-        format: uri
-        description: Url for the user to see and accept the offer given by Qred
 example:
   type: Approved
   amount: 5000
   term: 12
   campaign: Spring Campaign
-  offerUrl: https://qred.com/link-to-offer?id=offer-id
-  userPage: https://qred.com/en/partner-application-page?partner=partner&someid=0462a90cfd564820b8d428f252629c2c
