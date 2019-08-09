@@ -24,7 +24,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ApplicationDecisionManualApproved'
+            $ref: '#/components/schemas/ApplicationDecisionApproved'
     211:
       description: Found application with id
       content:
