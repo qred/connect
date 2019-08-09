@@ -9,7 +9,7 @@ allOf:
       campaign:
         type: string
 example:
-  type: Approved
+  status: Approved
   amount: 5000
   term: 12
   campaign: Spring Campaign

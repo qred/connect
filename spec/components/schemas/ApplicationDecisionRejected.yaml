@@ -5,6 +5,6 @@ allOf:
       rejectReason:
         type: string
 example:
-  type: Denied
+  status: Denied
   rejectReason: Due to previous problems with payments we regret that we have to reject the application.
   
